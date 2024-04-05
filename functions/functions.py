@@ -1,0 +1,142 @@
+import os
+import subprocess
+import time
+import sys
+import fileinput
+import random
+import string
+
+from colors.colors import Colors
+from status.status import Status
+from report.report import send_report
+
+def clear_screen():
+    os.system('clear')
+
+def print_message(message):
+    print(message)
+
+def get_input(prompt):
+    return input(prompt)
+
+def execute_command(command, no_visible=False):
+    try:
+        if no_visible:
+            result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        else:
+            result = subprocess.run(command, shell=True, check=True)
+
+        return result.returncode
+    except subprocess.CalledProcessError as e:
+        print(f'\nAn error has occurred: {e}')
+        return e.returncode
+
+def validate_choice(prompt, valid_choices, default_to_one=False):
+    choice = None
+
+    while choice not in valid_choices:
+        choice = get_input(prompt).strip()
+
+        if not choice and default_to_one:
+            choice = "1"
+            break
+
+        if choice not in valid_choices:
+            print_message(f'{Colors.red}ERROR{Colors.reset}: Invalid choice. Please try again.')
+
+    return choice
+
+def terminate_installation():
+    send_report('error')
+
+    print_message(f'\n{Colors.bold}{Colors.red}CRITICAL{Colors.reset}: Installation aborted.')
+    sys.exit()
+
+def validate_input(prompt, valid_choices, message):
+    choice = None
+
+    while True:
+        choice = get_input(prompt).strip().lower()
+
+        if choice in valid_choices:
+            print_message(message.replace('%valid%', choice))
+        else:
+            break
+
+    return choice
+
+def validate_timezone(prompt, message):
+    while True:
+        choice = get_input(prompt).strip()
+
+        if not choice:
+            return "UTC"
+
+        try:
+            result    = subprocess.run(['timedatectl', 'list-timezones'], capture_output=True, text=True)
+            timezones = result.stdout.split('\n')
+
+            if choice in timezones:
+                return choice
+            else:
+                print_message(message.replace('%timezone%', choice))
+        except Exception as e:
+            print_message(f'An error has occurred: {e}')
+            return False
+
+def validate_device(prompt, message_not_found, message_empty):
+    while True:
+        choice = get_input(prompt).strip()
+
+        if not choice:
+            print_message(message_empty)
+            continue
+
+        try:
+            result = subprocess.run(['lsblk', '-o', 'NAME', '-l', f'/dev/{choice}'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            device = result.stdout.split('\n')[1:]
+
+            if choice in device:
+                return choice
+            else:
+                print_message(message_not_found.replace('%device%', choice))
+        except Exception as e:
+            print_message(f'An error has occurred: {e}')
+            return False
+
+def generate_password(length=8):
+    characters = (string.ascii_letters + string.digits)
+    password   = ''.join(random.choice(characters) for _ in range(length))
+
+    return password
+
+def check_package_exists(package):
+    try:
+        subprocess.run(['pacman', '-Si', package], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+def print_progress(description):
+    message = f'{Status.PROGRESS} {description}'
+    print(message, end='', flush=True)
+
+def print_result(return_code, description):
+    if return_code == 0:
+        message = f'{Status.OK} {description}'
+    else:
+        message = f'{Status.ERROR} {description}'
+
+    print_message(f'\r{message}')
+
+def execute_and_process_command(command, description):
+    print_progress(description)
+
+    try:
+        with open('installer.log', 'a') as log_file:
+            subprocess.run(command, shell=True, check=True, stdout=log_file, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        print_result(1, description)
+    else:
+        print_result(0, description)
+        return True
