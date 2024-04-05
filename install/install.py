@@ -104,7 +104,7 @@ def install(user_data, package_data, service_data, selected_data):
 
     # Installing the necessary utilities for EFI and installing GRUB on the system
     if not execute_and_process_command(f'arch-chroot /mnt /bin/bash -c "pacman -Syy grub efibootmgr --noconfirm"', 'Installing the necessary utilities for EFI'):
-        return Falses
+        return False
 
     # Installing GRUB on the system
     if not execute_and_process_command(f'arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Arch --no-nvram --removable /dev/{user_data.disk}"', 'Installing GRUB on the system'):
