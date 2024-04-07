@@ -53,7 +53,7 @@ packages = {
         },
 
         "5": {
-            "packages": "command > /dev/null",
+            "packages": "command >/dev/null",
             "type":     "NOTHING"
         }
     },
@@ -61,19 +61,19 @@ packages = {
     "sound": {
         "1": {
             "packages": "pacstrap -i /mnt pipewire pipewire-media-session pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse --noconfirm",
-            "service":  "command > /dev/null",
+            "service":  "command >/dev/null",
             "type":     "PIPEWIRE"
         },
 
         "2": {
             "packages": "pacstrap -i /mnt pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack pulseaudio-zeroconf --noconfirm",
-            "service":  "systemctl enable pulseaudio --force",
+            "service":  "command >/dev/null",
             "type":     "PULSEAUDIO"
         },
 
         "3": {
-            "packages": "command > /dev/null",
-            "service":  "command > /dev/null",
+            "packages": "command >/dev/null",
+            "service":  "command >/dev/null",
             "type":     "NOTHING"
         }
     },
@@ -92,8 +92,8 @@ packages = {
         },
 
         "3": {
-            "packages": "command > /dev/null",
-            "service":  "command > /dev/null",
+            "packages": "command >/dev/null",
+            "service":  "command >/dev/null",
             "type":     "NOTHING"
         }
     }
