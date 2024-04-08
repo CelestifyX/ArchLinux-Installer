@@ -3,7 +3,7 @@ from functions.functions import *
 from packages.packages   import packages
 from colors.colors       import Colors
 
-def configuration(user_data, package_data, service_data, selected_data):
+def configuration(user_data, int_data, selected_data, package_data, service_data):
     print_message(f'\nEnter a new username [user]')
     username = validate_input(f"> ", ['root', 'localhost'], f'{Colors.red}ERROR{Colors.reset}: Username \'%valid%\' is not allowed. Please choose another username.').lower()
 
@@ -49,15 +49,15 @@ def configuration(user_data, package_data, service_data, selected_data):
     print_message(f'\nEnter the additional packages you need (Example: zip,unzip,git) [Enter]')
     additionals_packages = get_input("> ").strip()
 
-    additionals_packages_status = [pkg.strip() for pkg in additionals_packages.split(',') if pkg.strip() and check_package_exists(pkg.strip())]
+    additionals_packages_status = set(pkg.strip() for pkg in additionals_packages.split(',') if pkg.strip() and check_package_exists(pkg.strip()))
 
     if additionals_packages_status:
         package_data.additionals = ' '.join(additionals_packages_status)
 
     print_message(f'\nSelect kernel (1 - Linux (INTEL), 2 - Linux ZEN (INTEL), 3 - Linux LTS (INTEL), 4 - Linux (AMD), 5 - Linux ZEN (AMD), 6 - Linux LTS (AMD))')
-    user_data.kernel = validate_choice("> ", ['1', '2', '3', '4', '5', '6'])
+    int_data.kernel = validate_choice("> ", ['1', '2', '3', '4', '5', '6'])
 
-    kernel = packages.get("kernel", {}).get(user_data.kernel)
+    kernel = packages.get("kernel", {}).get(int_data.kernel)
 
     if kernel:
         package_data.kernel  = kernel["packages"]
@@ -66,9 +66,9 @@ def configuration(user_data, package_data, service_data, selected_data):
         return False
 
     print_message(f'\nSelect video driver (1 - INTEL (BUILT-IN), 2 - NVIDIA (PROPRIETARY), 3 - INTEL (BUILT-IN) + NVIDIA (PROPRIETARY), 4 - AMD (DISCRETE), 5 - NOTHING)')
-    user_data.driver = validate_choice("> ", ['1', '2', '3', '4', '5'])
+    int_data.driver = validate_choice("> ", ['1', '2', '3', '4', '5'])
 
-    driver = packages.get("driver", {}).get(user_data.driver)
+    driver = packages.get("driver", {}).get(int_data.driver)
 
     if driver:
         package_data.driver  = driver["packages"]
@@ -77,9 +77,9 @@ def configuration(user_data, package_data, service_data, selected_data):
         return False
 
     print_message(f'\nSelect sound driver (1 - PIPEWIRE, 2 - PULSEAUDIO, 3 - NOTHING) [1]')
-    user_data.sound = validate_choice("> ", ['1', '2', '3'], True)
+    int_data.sound = validate_choice("> ", ['1', '2', '3'], True)
 
-    sound = packages.get("sound", {}).get(user_data.sound)
+    sound = packages.get("sound", {}).get(int_data.sound)
 
     if sound:
         package_data.sound  = sound["packages"]
@@ -89,9 +89,9 @@ def configuration(user_data, package_data, service_data, selected_data):
         return False
 
     print_message(f'\nSelect your work environment (1 - KDE, 2 - GNOME, 3 - NOTHING) [1]')
-    user_data.desktop = validate_choice("> ", ['1', '2', '3'], True)
+    int_data.desktop = validate_choice("> ", ['1', '2', '3'], True)
 
-    desktop = packages.get("desktop", {}).get(user_data.desktop)
+    desktop = packages.get("desktop", {}).get(int_data.desktop)
 
     if desktop:
         package_data.desktop  = desktop["packages"]

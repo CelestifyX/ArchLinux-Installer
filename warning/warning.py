@@ -14,21 +14,26 @@ def warning():
     else:
         return False
 
-def setup_warning(user_data, selected_data, package_data):
+def setup_warning(user_data, selected_data, package_data, disk_data):
     clear_screen()
 
     # Information
     print_message(f'{Colors.cyan}Installation Confirmation{Colors.reset}:')
 
-    print_message(f'\nDISK: /dev/{user_data.disk} [{selected_data.file_system}]')
-    print_message(f'  BOOT: {selected_data.boot}')
-    print_message(f'  SWAP: {selected_data.swap}')
-    print_message(f'  ROOT: {selected_data.root}')
+    disk_size_gb   = get_size(disk_data.disk, None, False)
+    boot_size_gb   = get_size(disk_data.disk, disk_data.boot)
+    swap_size_gb   = get_size(disk_data.disk, disk_data.swap)
+    system_size_gb = get_size(disk_data.disk, disk_data.system)
+
+    print_message(f'\nDISK: /dev/{disk_data.disk} ({disk_size_gb}) [FAT32]')
+    print_message(f'  BOOT: {disk_data.boot} ({boot_size_gb})')
+    print_message(f'  SWAP: {disk_data.swap} ({swap_size_gb})')
+    print_message(f'  SYSTEM: {disk_data.system} ({system_size_gb}) [{selected_data.file_system}]')
 
     print_message(f'\nTIMEZONE: {user_data.timezone}')
     print_message(f'HOSTNAME: {user_data.hostname}')
 
-    print_message(f'\nUSER & PASSWORD:')
+    print_message(f'\nACCOUNTS:')
     print_message(f'  {user_data.username}: {user_data.userpassword}')
     print_message(f'  root: {user_data.password}')
 
@@ -38,7 +43,8 @@ def setup_warning(user_data, selected_data, package_data):
     print_message(f'DESKTOP: {selected_data.desktop}')
 
     if package_data.additionals is not None:
-        print_message(f'\nADDITIONAL PACKAGES: {package_data.additionals}')
+        formatted_packages = ", ".join(package_data.additionals.split())
+        print_message(f'\nADDITIONAL PACKAGES: {formatted_packages}')
 
     # Warning
     print_message(f'\n\n{Colors.orange}WARNING{Colors.reset}: By proceeding, you acknowledge that the author is not responsible for any incorrect actions.')

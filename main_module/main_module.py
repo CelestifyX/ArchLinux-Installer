@@ -19,21 +19,33 @@ class ArchInstaller:
 
     def run(self):
         user_data     = UserData()
+        int_data      = IntData()
+        selected_data = SelectedData()
         package_data  = PackageData()
         service_data  = ServiceData()
-        selected_data = SelectedData()
+        disk_data     = DiskData()
 
         try:
             if not self.warning_func():
                 terminate_installation()
-            if not self.disk_func(user_data, selected_data):
+
+
+            if not self.disk_func(disk_data, selected_data, int_data):
                 terminate_installation()
-            if not self.configuration_func(user_data, package_data, service_data, selected_data):
+
+
+            if not self.configuration_func(user_data, int_data, selected_data, package_data, service_data):
                 terminate_installation()
-            if not self.setup_warning_func(user_data, selected_data, package_data):
+
+
+            if not self.setup_warning_func(user_data, selected_data, package_data, disk_data):
                 terminate_installation()
-            if not self.install_func(user_data, package_data, service_data, selected_data):
+
+
+            if not self.install_func(user_data, int_data, package_data, service_data, disk_data):
                 terminate_installation()
+
+
             if not self.finish_func():
                 terminate_installation()
         except KeyboardInterrupt:

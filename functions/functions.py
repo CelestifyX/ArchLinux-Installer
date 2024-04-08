@@ -104,6 +104,21 @@ def validate_device(prompt, message_not_found, message_empty):
             print_message(f'An error has occurred: {e}')
             return False
 
+def get_size(device, partition, isPartition=True):
+    if isPartition:
+        command = f'fdisk -l /dev/{device} | grep /dev/{partition}'
+        output  = subprocess.check_output(command, shell=True, text=True)
+        lines   = output.split('\n')
+
+        for line in lines:
+            if device in line:
+                return line.split()[4]
+    else:
+        command = f'fdisk -l /dev/{device} | grep "Disk /dev/{device}"'
+        output  = subprocess.check_output(command, shell=True, text=True)
+
+        return output.split('\n')[0].split(":")[1].split(",")[0].strip()
+
 def generate_password(length=8):
     characters = (string.ascii_letters + string.digits)
     password   = ''.join(random.choice(characters) for _ in range(length))

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ($status === 'error')
         )
     ) {
-        $directory = ($status === 'success') ? 'tmp/success' : 'tmp/error';
+        $directory = (($status === 'success') ? 'tmp/success' : 'tmp/error');
         if (!file_exists($directory)) mkdir($directory, 0777, true);
 
         if (
