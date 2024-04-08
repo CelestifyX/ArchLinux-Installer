@@ -25,8 +25,8 @@ def setup_warning(user_data, selected_data, package_data, disk_data):
     swap_size_gb   = get_size(disk_data.disk, disk_data.swap)
     system_size_gb = get_size(disk_data.disk, disk_data.system)
 
-    print_message(f'\nDISK: /dev/{disk_data.disk} ({disk_size_gb}) [FAT32]')
-    print_message(f'  BOOT: {disk_data.boot} ({boot_size_gb})')
+    print_message(f'\nDISK: /dev/{disk_data.disk} ({disk_size_gb})')
+    print_message(f'  BOOT: {disk_data.boot} ({boot_size_gb}) [FAT32]')
     print_message(f'  SWAP: {disk_data.swap} ({swap_size_gb})')
     print_message(f'  SYSTEM: {disk_data.system} ({system_size_gb}) [{selected_data.file_system}]')
 
