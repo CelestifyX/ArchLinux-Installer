@@ -26,9 +26,9 @@ def setup_warning(user_data, selected_data, package_data, disk_data):
     system_size_gb = get_size(disk_data.disk, disk_data.system)
 
     print_message(f'\nDISK: /dev/{disk_data.disk} ({disk_size_gb})')
-    print_message(f'  BOOT: {disk_data.boot} ({boot_size_gb}) [FAT32]')
-    print_message(f'  SWAP: {disk_data.swap} ({swap_size_gb})')
-    print_message(f'  SYSTEM: {disk_data.system} ({system_size_gb}) [{selected_data.file_system}]')
+    print_message(f'  BOOT: /dev/{disk_data.boot} ({boot_size_gb}) [FAT32]')
+    print_message(f'  SWAP: /dev/{disk_data.swap} ({swap_size_gb})')
+    print_message(f'  SYSTEM: /dev/{disk_data.system} ({system_size_gb}) [{selected_data.file_system}]')
 
     print_message(f'\nTIMEZONE: {user_data.timezone}')
     print_message(f'HOSTNAME: {user_data.hostname}')
@@ -41,6 +41,7 @@ def setup_warning(user_data, selected_data, package_data, disk_data):
     print_message(f'VIDEO DRIVER: {selected_data.driver}')
     print_message(f'SOUND DRIVER: {selected_data.sound}')
     print_message(f'DESKTOP: {selected_data.desktop}')
+    print_message(f'FONT: {selected_data.font}')
 
     if package_data.additionals is not None:
         formatted_packages = ", ".join(package_data.additionals.split())

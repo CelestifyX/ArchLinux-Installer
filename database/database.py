@@ -13,6 +13,7 @@ class IntData:
         self.driver       = None
         self.sound        = None
         self.desktop      = None
+        self.font         = None
 
 class DiskData:
     def __init__(self):
@@ -28,6 +29,7 @@ class SelectedData:
         self.driver       = None
         self.sound        = None
         self.desktop      = None
+        self.font         = None
 
 class PackageData:
     def __init__(self):
@@ -36,6 +38,7 @@ class PackageData:
         self.driver       = None
         self.sound        = None
         self.desktop      = None
+        self.font         = None
 
 class ServiceData:
     def __init__(self):

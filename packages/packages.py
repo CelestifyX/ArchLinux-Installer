@@ -80,7 +80,7 @@ packages = {
 
     "desktop": {
         "1": {
-            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole discover elisa ark gwenview sddm-kcm spectacle fwupd noto-fonts-emoji power-profiles-daemon bluez bluez-utils qt6-quick3d kdeplasma-addons --noconfirm",
+            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole discover elisa ark gwenview sddm-kcm spectacle fwupd power-profiles-daemon bluez bluez-utils qt6-quick3d kdeplasma-addons --noconfirm",
             "service":  "systemctl enable sddm bluetooth --force",
             "type":     "KDE PLASMA"
         },
@@ -94,6 +94,18 @@ packages = {
         "3": {
             "packages": "command >/dev/null",
             "service":  "command >/dev/null",
+            "type":     "NOTHING"
+        }
+    },
+
+    "font": {
+        "1": {
+            "packages": "pacstrap -i /mnt noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols",
+            "type":     "NOTO-FONTS"
+        },
+
+        "2": {
+            "packages": "command >/dev/null",
             "type":     "NOTHING"
         }
     }

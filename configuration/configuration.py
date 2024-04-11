@@ -46,15 +46,18 @@ def configuration(user_data, int_data, selected_data, package_data, service_data
     else:
         user_data.hostname = hostname
 
-    print_message(f'\nEnter the additional packages you need (Example: zip,unzip,git) [Enter]')
-    additionals_packages = get_input("> ").strip()
+    print_message(f'\nSelect a font (1 - NOTO-FONTS, 2 - NOTHING) [1]')
+    int_data.font = validate_choice("> ", ['1', '2'], True)
 
-    additionals_packages_status = set(pkg.strip() for pkg in additionals_packages.split(',') if pkg.strip() and check_package_exists(pkg.strip()))
+    font = packages.get("font", {}).get(int_data.font)
 
-    if additionals_packages_status:
-        package_data.additionals = ' '.join(additionals_packages_status)
+    if font:
+        package_data.font  = font["packages"]
+        selected_data.font = font["type"]
+    else:
+        return False
 
-    print_message(f'\nSelect kernel (1 - Linux (INTEL), 2 - Linux ZEN (INTEL), 3 - Linux LTS (INTEL), 4 - Linux (AMD), 5 - Linux ZEN (AMD), 6 - Linux LTS (AMD))')
+    print_message(f'\nSelect kernel (1 - LINUX (INTEL), 2 - LINUX ZEN (INTEL), 3 - LINUX LTS (INTEL), 4 - LINUX (AMD), 5 - LINUX ZEN (AMD), 6 - LINUX LTS (AMD))')
     int_data.kernel = validate_choice("> ", ['1', '2', '3', '4', '5', '6'])
 
     kernel = packages.get("kernel", {}).get(int_data.kernel)
@@ -99,5 +102,13 @@ def configuration(user_data, int_data, selected_data, package_data, service_data
         selected_data.desktop = desktop["type"]
     else:
         return False
+
+    print_message(f'\nEnter the additional packages you need (Example: zip,unzip,git) [Enter]')
+    additionals_packages = get_input("> ").strip()
+
+    additionals_packages_status = set(pkg.strip() for pkg in additionals_packages.split(',') if pkg.strip() and check_package_exists(pkg.strip()))
+
+    if additionals_packages_status:
+        package_data.additionals = ' '.join(additionals_packages_status)
 
     return True
