@@ -121,8 +121,10 @@ def install(user_data, int_data, package_data, service_data, disk_data):
     if not execute_and_process_command(f'arch-chroot /mnt /bin/bash -c "{service_data.sound}"', f'Enabling audio services'):
         return False
 
-    # Installation of the working environment
+    # Installation of the working environment and font
     if not execute_and_process_command(f'{package_data.desktop}', f'Installation of the working environment'):
+        return False
+    if not execute_and_process_command(f'{package_data.font}', f'Installation a font'):
         return False
 
     # Installing additional packages
