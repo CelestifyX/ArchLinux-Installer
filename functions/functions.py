@@ -1,8 +1,6 @@
 import os
 import subprocess
-import time
 import sys
-import fileinput
 import random
 import string
 

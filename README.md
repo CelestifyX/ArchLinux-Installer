@@ -1,6 +1,6 @@
 # ArchLinux-Installer
 
-This is a Python-based Arch Linux installer.
+An Arch-Linux installer written in Python
 
 ## Installation
 
