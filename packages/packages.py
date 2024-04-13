@@ -100,7 +100,7 @@ packages = {
 
     "font": {
         "1": {
-            "packages": "pacstrap -i /mnt noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols",
+            "packages": "pacstrap -i /mnt noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols --noconfirm",
             "type":     "NOTO-FONTS"
         },
 
