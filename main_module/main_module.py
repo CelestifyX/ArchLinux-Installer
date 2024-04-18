@@ -5,18 +5,18 @@ from functions.functions         import terminate_installation
 from configuration.configuration import configuration
 from install.install             import install
 from finish.finish               import finish
-from colors.colors               import Colors
 from disk.disk                   import disk
 
 class ArchInstaller:
     def __init__(self):
         self.functions =    [
-            (warning,       []),
-            (disk,          ["disk_data", "selected_data", "int_data"]),
-            (configuration, ["user_data", "int_data", "selected_data", "package_data", "service_data"]),
-            (setup_warning, ["user_data", "selected_data", "package_data", "disk_data"]),
-            (install,       ["user_data", "int_data", "package_data", "service_data", "disk_data"]),
-            (finish,        [])
+            (log_file_found_warning, []),
+            (warning,                []),
+            (disk,                   ["disk_data", "selected_data", "int_data"]),
+            (configuration,          ["user_data", "int_data",      "selected_data", "package_data", "service_data"]),
+            (setup_warning,          ["user_data", "selected_data", "package_data",  "disk_data"]),
+            (install,                ["user_data", "int_data",      "package_data",  "service_data", "disk_data"]),
+            (finish,                 [])
         ]
 
     def run(self):

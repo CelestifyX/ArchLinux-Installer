@@ -6,18 +6,14 @@ import string
 
 from colors.colors import Colors
 from status.status import Status
-from report.report import send_report
 
 def clear_screen():
     os.system('clear')
 
-def print_message(message):
-    print(message)
-
-def get_input(prompt):
-    return input(prompt)
-
-def execute_command(command, no_visible=False):
+def execute_command(
+    command,
+    no_visible=False
+):
     try:
         if no_visible:
             result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -29,43 +25,52 @@ def execute_command(command, no_visible=False):
         print(f'\nAn error has occurred: {e}')
         return e.returncode
 
-def validate_choice(prompt, valid_choices, default_to_one=False):
+def validate_choice(
+    prompt,
+    valid_choices,
+    default_to_one=False
+):
     choice = None
 
     while choice not in valid_choices:
-        choice = get_input(prompt).strip()
+        choice = input(prompt).strip()
 
         if not choice and default_to_one:
             choice = "1"
             break
 
         if choice not in valid_choices:
-            print_message(f'{Colors.red}ERROR{Colors.reset}: Invalid choice. Please try again.')
+            print(f'{Colors.red}ERROR{Colors.reset}: Invalid choice. Please try again.')
 
     return choice
 
 def terminate_installation():
-    send_report('error')
-
-    print_message(f'\n{Colors.bold}{Colors.red}CRITICAL{Colors.reset}: Installation aborted.')
+    print(f'\n{Colors.bold}{Colors.red}CRITICAL{Colors.reset}: Installation aborted.')
     sys.exit()
 
-def validate_input(prompt, valid_choices, message):
+def validate_input(
+    prompt,
+    valid_choices,
+    message
+):
     choice = None
 
     while True:
-        choice = get_input(prompt).strip().lower()
+        choice = input(prompt).strip().lower()
 
         if choice in valid_choices:
-            print_message(message.replace('%valid%', choice))
+            print(message.replace('%valid%', choice))
         else:
             break
 
     return choice
 
-def validate_timezone(prompt, message):
+def validate_timezone(
+    prompt,
+    message
+):
     while True:
-        choice = get_input(prompt).strip()
+        choice = input(prompt).strip()
 
         if not choice:
             return "UTC"
@@ -77,17 +82,21 @@ def validate_timezone(prompt, message):
             if choice in timezones:
                 return choice
             else:
-                print_message(message.replace('%timezone%', choice))
+                print(message.replace('%timezone%', choice))
         except Exception as e:
-            print_message(f'An error has occurred: {e}')
+            print(f'\nAn error has occurred: {e}')
             return False
 
-def validate_device(prompt, message_not_found, message_empty):
+def validate_device(
+    prompt,
+    message_not_found,
+    message_empty
+):
     while True:
-        choice = get_input(prompt).strip()
+        choice = input(prompt).strip()
 
         if not choice:
-            print_message(message_empty)
+            print(message_empty)
             continue
 
         try:
@@ -97,12 +106,16 @@ def validate_device(prompt, message_not_found, message_empty):
             if choice in device:
                 return choice
             else:
-                print_message(message_not_found.replace('%device%', choice))
+                print(message_not_found.replace('%device%', choice))
         except Exception as e:
-            print_message(f'An error has occurred: {e}')
+            print(f'\nAn error has occurred: {e}')
             return False
 
-def get_size(device, partition, isPartition=True):
+def get_size(
+    device,
+    partition,
+    isPartition=True
+):
     if isPartition:
         command = f'fdisk -l /dev/{device} | grep /dev/{partition}'
         output  = subprocess.check_output(command, shell=True, text=True)
@@ -140,9 +153,12 @@ def print_result(return_code, description):
     else:
         message = f'{Status.ERROR} {description}'
 
-    print_message(f'\r{message}')
+    print(f'\r{message}')
 
-def execute_and_process_command(command, description):
+def execute_and_process_command(
+    command,
+    description
+):
     print_progress(description)
 
     try:
