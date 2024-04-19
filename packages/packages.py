@@ -80,7 +80,7 @@ packages = {
 
     "desktop": {
         "1": {
-            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole discover elisa ark gwenview sddm-kcm spectacle fwupd power-profiles-daemon bluez bluez-utils qt6-quick3d kdeplasma-addons --noconfirm",
+            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole elisa ark gwenview sddm-kcm spectacle fwupd power-profiles-daemon kdeplasma-addons --noconfirm",
             "service":  "systemctl enable sddm bluetooth --force",
             "type":     "KDE PLASMA"
         },
