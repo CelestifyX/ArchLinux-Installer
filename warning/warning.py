@@ -6,7 +6,7 @@ def warning():
 
     print(f'{Colors.orange}WARNING{Colors.reset}: By proceeding, you acknowledge that the author is not responsible for any incorrect actions.')
     print('Do you want to continue? (Y/n) [n]')
-    answer = input(f"> ").lower()
+    answer = input("> ").lower()
 
     if answer in ['y', 'yes', '1']:
         clear_screen()
@@ -69,7 +69,7 @@ def setup_warning(
     print(f'{Colors.orange}WARNING{Colors.reset}: Save your account name and passwords')
 
     print('\nDo you want to continue? (Y/n) [n]')
-    answer = input(f"> ").lower()
+    answer = input("> ").lower()
 
     if answer in ['y', 'yes', '1']:
         clear_screen()

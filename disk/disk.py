@@ -16,7 +16,7 @@ def disk(
     else:
         return False
 
-    input(f'\nPress Enter to begin partitioning the /dev/{disk_data.disk} drive (1 - EFI, 2 - SWAP, 3 - /)')
+    input(f'\nPress Enter to begin partitioning the /dev/{disk_data.disk} drive (1 - EFI, 2 - SWAP, 3 - SYSTEM)')
     execute_command(f'cfdisk --zero /dev/{disk_data.disk}')
     clear_screen()
 
@@ -36,7 +36,7 @@ def disk(
     else:
         return False
 
-    print('\nEnter ROOT partition (EXAMPLE: sda3, sdc3, nvme0n1p3)')
+    print('\nEnter SYSTEM partition (EXAMPLE: sda3, sdc3, nvme0n1p3)')
     system = validate_device("> ", f'{Colors.red}ERROR{Colors.reset}: Partition \'%device%\' not found.', f'{Colors.red}ERROR{Colors.reset}: You didn`t enter any partition name.')
 
     if system:
@@ -44,7 +44,7 @@ def disk(
     else:
         return False
 
-    print('\nSelect file system type for / (1 - F2FS, 2 - EXT4, 3 - BTRFS) [1]')
+    print('\nSelect file system type for system (1 - F2FS, 2 - EXT4, 3 - BTRFS) [1]')
     int_data.file_system = validate_choice("> ", ['1', '2', '3'], True)
 
     file_system = {
