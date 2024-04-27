@@ -3,12 +3,17 @@ import subprocess
 import sys
 import random
 import string
+import time
 
 from colors.colors import Colors
 from status.status import Status
 
 def clear_screen():
     os.system('clear')
+
+def terminate_installation():
+    print(f'\n{Colors.bold}{Colors.red}CRITICAL{Colors.reset}: Installation aborted.')
+    sys.exit()
 
 def execute_command(
     command,
@@ -43,10 +48,6 @@ def validate_choice(
             print(f'{Colors.red}ERROR{Colors.reset}: Invalid choice. Please try again.')
 
     return choice
-
-def terminate_installation():
-    print(f'\n{Colors.bold}{Colors.red}CRITICAL{Colors.reset}: Installation aborted.')
-    sys.exit()
 
 def validate_input(
     prompt,
@@ -147,25 +148,33 @@ def print_progress(description):
     message = f'{Status.PROGRESS} {description}'
     print(message, end='', flush=True)
 
-def print_result(return_code, description):
+def print_result(
+    return_code,
+    description,
+    end_time
+):
     if return_code == 0:
         message = f'{Status.OK} {description}'
     else:
         message = f'{Status.ERROR} {description}'
 
-    print(f'\r{message}')
+    print(f'\r{message} [{end_time:.2f}s]')
 
 def execute_and_process_command(
     command,
     description
 ):
+    start_time = time.time()
     print_progress(description)
 
     try:
         with open('installer.log', 'a') as log_file:
             subprocess.run(command, shell=True, check=True, stdout=log_file, stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
-        print_result(1, description)
+        end_time = time.time()
+        print_result(1, description, (end_time - start_time))
     else:
-        print_result(0, description)
-        return True
+        end_time = time.time()
+
+    print_result(0, description, (end_time - start_time))
+    return True
