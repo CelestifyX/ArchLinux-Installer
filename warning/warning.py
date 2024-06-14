@@ -59,8 +59,8 @@ def setup_warning(
     print(f'DESKTOP: {selected_data.desktop}')
     print(f'FONT: {selected_data.font}')
 
-    if package_data.additionals is not None:
-        formatted_packages = ", ".join(package_data.additionals.split())
+    if package_data.additionals:
+        formatted_packages = ", ".join(package_data.additionals.split()).rstrip()
         print(f'\nADDITIONAL PACKAGES: {formatted_packages}')
 
     # Warning

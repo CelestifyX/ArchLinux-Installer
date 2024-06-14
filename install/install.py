@@ -135,7 +135,7 @@ def install(
 
     # Installing additional packages
     if package_data.additionals is not None:
-        formatted_packages = ", ".join(package_data.additionals.split())
+        formatted_packages = ", ".join(package_data.additionals.split()).rstrip()
         if not execute_and_process_command(f'pacstrap -i /mnt {package_data.additionals} --noconfirm', f'Installing additional packages ({formatted_packages})'):
             return False
 

@@ -109,12 +109,7 @@ def configuration(
     else:
         return False
 
-    print('\nEnter the additional packages you need (Example: zip,unzip,git) [Enter]')
-    additionals_packages = input("> ").strip()
-
-    additionals_packages_status = set(pkg.strip() for pkg in additionals_packages.split(',') if pkg.strip() and check_package_exists(pkg.strip()))
-
-    if additionals_packages_status:
-        package_data.additionals = ' '.join(additionals_packages_status)
+    for package in get_existing_packages():
+        package_data.additionals += package + " "
 
     return True

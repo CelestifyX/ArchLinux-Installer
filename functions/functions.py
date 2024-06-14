@@ -144,6 +144,18 @@ def check_package_exists(package):
     except subprocess.CalledProcessError:
         return False
 
+def read_additional_packages():
+    try:
+        with open('additional_packages.txt', 'r') as file:
+            packages = [line.strip() for line in file if line.strip()]
+
+        return packages
+    except IOError:
+        return []
+
+def get_existing_packages():
+    return [package for package in read_additional_packages() if check_package_exists(package)]
+
 def print_progress(description):
     message = f'{Status.PROGRESS} {description}'
     print(message, end='', flush=True)

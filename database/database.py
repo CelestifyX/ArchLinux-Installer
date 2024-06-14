@@ -1,46 +1,46 @@
 class UserData:
     def __init__(self):
-        self.user         = None
-        self.password     = None
-        self.userpassword = None
-        self.hostname     = None
-        self.timezone     = None
+        self.user         = ""
+        self.password     = ""
+        self.userpassword = ""
+        self.hostname     = ""
+        self.timezone     = ""
 
 class IntData:
     def __init__(self):
-        self.file_system  = None
-        self.kernel       = None
-        self.driver       = None
-        self.sound        = None
-        self.desktop      = None
-        self.font         = None
+        self.file_system  = ""
+        self.kernel       = ""
+        self.driver       = ""
+        self.sound        = ""
+        self.desktop      = ""
+        self.font         = ""
 
 class DiskData:
     def __init__(self):
-        self.disk         = None
-        self.boot         = None
-        self.swap         = None
-        self.system       = None
+        self.disk         = ""
+        self.boot         = ""
+        self.swap         = ""
+        self.system       = ""
 
 class SelectedData:
     def __init__(self):
-        self.file_system  = None
-        self.kernel       = None
-        self.driver       = None
-        self.sound        = None
-        self.desktop      = None
-        self.font         = None
+        self.file_system  = ""
+        self.kernel       = ""
+        self.driver       = ""
+        self.sound        = ""
+        self.desktop      = ""
+        self.font         = ""
 
 class PackageData:
     def __init__(self):
-        self.additionals  = None
-        self.kernel       = None
-        self.driver       = None
-        self.sound        = None
-        self.desktop      = None
-        self.font         = None
+        self.additionals  = ""
+        self.kernel       = ""
+        self.driver       = ""
+        self.sound        = ""
+        self.desktop      = ""
+        self.font         = ""
 
 class ServiceData:
     def __init__(self):
-        self.sound        = None
-        self.desktop      = None
+        self.sound        = ""
+        self.desktop      = ""
