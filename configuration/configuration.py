@@ -97,8 +97,8 @@ def configuration(
     else:
         return False
 
-    print('\nSelect the desktop environment (1 - KDE, 2 - GNOME, 3 - NOTHING) [1]')
-    int_data.desktop = validate_choice("> ", ['1', '2', '3'], True)
+    print('\nSelect the desktop environment (1 - KDE, 2 - GNOME, 3 - XFCE4, 4 - CINNAMON, 5 - BUDGIE, 6 - NOTHING) [1]')
+    int_data.desktop = validate_choice("> ", ['1', '2', '3', '4', '5'], True)
 
     desktop = packages.get("desktop", {}).get(int_data.desktop)
 
@@ -108,6 +108,13 @@ def configuration(
         selected_data.desktop = desktop["type"]
     else:
         return False
+
+    print('\nDo you wish to add additional packages? [y/N]')
+    answer = input("> ").lower()
+
+    if answer in ['y', 'yes', '1']:
+        clear_screen()
+        os.system("nano ./additional_packages.txt")
 
     for package in get_existing_packages():
         package_data.additionals += package + " "

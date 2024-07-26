@@ -24,12 +24,6 @@ def install(
     else:
         return False
 
-    # Creating a swap partition and activating it
-    if not execute_and_process_command(f'mkswap -f /dev/{disk_data.swap}', 'Creating a swap partition'):
-        return False
-    if not execute_and_process_command(f'swapon -f /dev/{disk_data.swap}', 'Activating the swap partition'):
-        return False
-
     # Mounting the EFI partition and / into the /mnt directory
     if not execute_and_process_command('mkdir -p /mnt/', 'Creating the /mnt folder'):
         return False
@@ -82,10 +76,12 @@ def install(
     if not execute_and_process_command(f'arch-chroot /mnt /bin/bash -c "echo \'127.0.0.1 {user_data.hostname}.localdomain {user_data.hostname}\' >> /etc/hosts"', 'Adding a custom host to hosts file'):
         return False
 
-    # Activating multilib repositories, detailed package list and installing multiple downloads (For system)
+    # Activating multilib repositories, colors for pacman, detailed package list and installing multiple downloads (For system)
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "sed -i s/#ParallelDownloads\ =\ 5/ParallelDownloads\ =\ 10/g /etc/pacman.conf"', 'Activating multilib repositories (for system)'):
         return False
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "sed -i s/#VerbosePkgLists/VerbosePkgLists/g /etc/pacman.conf"', 'Activating detailed package list (for system)'):
+        return False
+    if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "sed -i s/#Color/Color/g /etc/pacman.conf"', 'Activating colors for pacman'):
         return False
     if not execute_and_process_command('sed -i "/\\[multilib\\]/,/Include/"\'s/^#//\' /mnt/etc/pacman.conf', 'Activating multilib repositories (for system)'):
         return False
@@ -153,6 +149,10 @@ def install(
 
     # Creating a GRUB configuration file
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"', 'Creating a GRUB configuration file'):
+        return False
+
+    # Added pwfeedback tp /etc/sudoers
+    if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "echo \'Defaults pwfeedback\' >> /etc/sudoers"', 'Added pwfeedback to /etc/sudoers'):
         return False
 
     # Leaving a arch-chroot environment

@@ -19,7 +19,6 @@ class DiskData:
     def __init__(self):
         self.disk         = ""
         self.boot         = ""
-        self.swap         = ""
         self.system       = ""
 
 class SelectedData:

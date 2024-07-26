@@ -16,7 +16,7 @@ def disk(
     else:
         return False
 
-    input(f'\nPress Enter to begin partitioning the /dev/{disk_data.disk} drive (1 - EFI, 2 - SWAP, 3 - SYSTEM)')
+    input(f'\nPress Enter to begin partitioning the /dev/{disk_data.disk} drive (1 - EFI, 2 - SYSTEM)')
     execute_command(f'cfdisk --zero /dev/{disk_data.disk}')
     clear_screen()
 
@@ -28,15 +28,7 @@ def disk(
     else:
         return False
 
-    print('\nEnter SWAP partition (EXAMPLE: sda2, sdc2, nvme0n1p2)')
-    swap = validate_device("> ", f'{Colors.red}ERROR{Colors.reset}: Partition \'%device%\' not found.', f'{Colors.red}ERROR{Colors.reset}: You didn`t enter any partition name.')
-
-    if swap:
-        disk_data.swap = swap
-    else:
-        return False
-
-    print('\nEnter SYSTEM partition (EXAMPLE: sda3, sdc3, nvme0n1p3)')
+    print('\nEnter SYSTEM partition (EXAMPLE: sda2, sdc2, nvme0n1p2)')
     system = validate_device("> ", f'{Colors.red}ERROR{Colors.reset}: Partition \'%device%\' not found.', f'{Colors.red}ERROR{Colors.reset}: You didn`t enter any partition name.')
 
     if system:

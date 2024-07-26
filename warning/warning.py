@@ -5,8 +5,11 @@ def warning():
     clear_screen()
 
     print(f'{Colors.orange}WARNING{Colors.reset}: By proceeding, you acknowledge that the author is not responsible for any incorrect actions.')
-    print('Do you want to continue? (Y/n) [n]')
+    print('Do you want to continue? [Y/n]')
     answer = input("> ").lower()
+
+    if answer == '' or answer == ' ':
+        answer = 'yes'
 
     if answer in ['y', 'yes', '1']:
         clear_screen()
@@ -38,12 +41,10 @@ def setup_warning(
 
     disk_size_gb   = get_size(disk_data.disk, None, False)
     boot_size_gb   = get_size(disk_data.disk, disk_data.boot)
-    swap_size_gb   = get_size(disk_data.disk, disk_data.swap)
     system_size_gb = get_size(disk_data.disk, disk_data.system)
 
     print(f'\nDISK: /dev/{disk_data.disk} ({disk_size_gb})')
     print(f'  BOOT: /dev/{disk_data.boot} ({boot_size_gb}) [FAT32]')
-    print(f'  SWAP: /dev/{disk_data.swap} ({swap_size_gb})')
     print(f'  SYSTEM: /dev/{disk_data.system} ({system_size_gb}) [{selected_data.file_system}]')
 
     print(f'\nTIMEZONE: {user_data.timezone}')
@@ -68,8 +69,11 @@ def setup_warning(
     print(f'{Colors.orange}WARNING{Colors.reset}: Check whether the entered data is correct or not')
     print(f'{Colors.orange}WARNING{Colors.reset}: Save your account name and passwords')
 
-    print('\nDo you want to continue? (Y/n) [n]')
+    print('\nDo you want to continue? [Y/n]')
     answer = input("> ").lower()
+
+    if answer == '' or answer == ' ':
+        answer = 'y'
 
     if answer in ['y', 'yes', '1']:
         clear_screen()

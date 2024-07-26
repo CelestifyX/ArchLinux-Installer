@@ -38,12 +38,12 @@ packages = {
         },
 
         "2": {
-            "packages": "pacstrap -i /mnt vulkan-icd-loader lib32-vulkan-icd-loader nvidia-dkms nvidia-utils lib32-nvidia-utils vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia nvidia-settings --noconfirm",
+            "packages": "pacstrap -i /mnt vulkan-icd-loader lib32-vulkan-icd-loader nvidia nvidia-utils lib32-nvidia-utils vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia nvidia-settings --noconfirm",
             "type":     "NVIDIA (NONFREE)"
         },
 
         "3": {
-            "packages": "pacstrap -i /mnt xf86-video-intel vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver lib32-libva-intel-driver nvidia-dkms nvidia-settings nvidia-prime --noconfirm",
+            "packages": "pacstrap -i /mnt xf86-video-intel vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver lib32-libva-intel-driver nvidia nvidia-settings nvidia-prime --noconfirm",
             "type":     "INTEL + NVIDIA (NONFREE)"
         },
 
@@ -80,7 +80,7 @@ packages = {
 
     "desktop": {
         "1": {
-            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole elisa ark gwenview sddm-kcm spectacle fwupd power-profiles-daemon kdeplasma-addons --noconfirm",
+            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole vvave ark gwenview sddm-kcm spectacle fwupd power-profiles-daemon kdeplasma-addons --noconfirm",
             "service":  "systemctl enable sddm bluetooth --force",
             "type":     "KDE PLASMA"
         },
@@ -92,6 +92,24 @@ packages = {
         },
 
         "3": {
+            "packages": "pacstrap -i /mnt xorg xorg-server xfce4 xfce4-goodies lightdm lightdm-gtk-greeter",
+            "service":  "systemctl enable lightdm",
+            "type":     "XFCE4"
+        },
+
+        "4": {
+            "packages": "pacstrap -i /mnt xorg xorg-server cinnamon gnome-terminal lightdm lightdm-gtk-greeter",
+            "service":  "systemctl enable lightdm",
+            "type":     "CINNAMON"
+        },
+
+        "5": {
+            "packages": "pacstrap -i /mnt xorg xorg-server budgie-desktop lightdm lightdm-gtk-greeter",
+            "service":  "systemctl enable lightdm",
+            "type":     "BUDGIE"
+        },
+
+        "6": {
             "packages": "command >/dev/null",
             "service":  "command >/dev/null",
             "type":     "NOTHING"
