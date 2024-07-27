@@ -99,7 +99,7 @@ def install(
         return False
 
     # Updating the initramfs image
-    os.system('arch-chroot /mnt /bin/bash -c "mkinitcpio -P >/dev/null 2>&1"')
+    execute_command('arch-chroot /mnt /bin/bash -c "mkinitcpio -P"', True)
 
     # Installing the necessary utilities for EFI and installing GRUB on the system
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "pacman -Syy grub efibootmgr --noconfirm"', 'Installing the necessary utilities for EFI booting'):
@@ -151,7 +151,7 @@ def install(
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"', 'Creating a GRUB configuration file'):
         return False
 
-    # Added pwfeedback tp /etc/sudoers
+    # Added pwfeedback to /etc/sudoers
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "echo \'Defaults pwfeedback\' >> /etc/sudoers"', 'Added pwfeedback to /etc/sudoers'):
         return False
 

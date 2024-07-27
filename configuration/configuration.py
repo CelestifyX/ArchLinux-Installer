@@ -114,7 +114,7 @@ def configuration(
 
     if answer in ['y', 'yes', '1']:
         clear_screen()
-        os.system("nano ./additional_packages.txt")
+        execute_command("nano ./additional_packages.txt", True)
 
     for package in get_existing_packages():
         package_data.additionals += package + " "
