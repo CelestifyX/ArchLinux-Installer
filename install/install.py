@@ -99,7 +99,7 @@ def install(
         return False
 
     # Updating the initramfs image
-    execute_command('arch-chroot /mnt /bin/bash -c "mkinitcpio -P"', True)
+    os.system('arch-chroot /mnt /bin/bash -c "mkinitcpio -P"')
 
     # Installing the necessary utilities for EFI and installing GRUB on the system
     if not execute_and_process_command('arch-chroot /mnt /bin/bash -c "pacman -Syy grub efibootmgr --noconfirm"', 'Installing the necessary utilities for EFI booting'):

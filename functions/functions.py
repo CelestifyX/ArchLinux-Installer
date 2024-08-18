@@ -189,4 +189,3 @@ def execute_and_process_command(
         end_time = time.time()
 
     print_result(0, description, (end_time - start_time))
-    return True
