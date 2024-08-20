@@ -36,7 +36,7 @@ class InstallationWizard {
     }
 
     private static function showPartitionWarning(): bool {
-        Utils::clear_screen();
+        Utils::execute("clear");
 
         Logger::send("Before starting the Arch Linux installer, you need to partition your disk.", LogLevel::INFO);
         Logger::send("Have you partitioned the disk? [Y/n]",                                       LogLevel::NOTICE);
@@ -48,7 +48,7 @@ class InstallationWizard {
     }
 
     private static function showActionsWarning(): bool {
-        Utils::clear_screen();
+        Utils::execute("clear");
 
         Logger::send("By proceeding, you acknowledge that the author is not responsible for any incorrect actions.", LogLevel::INFO);
         Logger::send("Do you want to continue? [Y/n]",                                                               LogLevel::NOTICE);
@@ -74,14 +74,14 @@ class InstallationWizard {
             }
         }
 
-        self::$config   = new Config(\PATH  . "settings.json",               Config::JSON);
-        self::$packages = (new Config(\PATH . "src/resources/packages.json", Config::JSON))->getAll();
+        self::$config   = new Config(\PATH  . "settings.json");
+        self::$packages = (new Config(\PATH . "src/resources/packages.json"))->getAll();
 
         return true;
     }
 
     private static function configureDisk(): bool {
-        Utils::clear_screen();
+        Utils::execute("clear");
 
         // ----------------------------------------------------------------------------------------------------------
         Logger::send("Enter the drive name (EXAMPLE: sda, sdc, nvme0n1)", LogLevel::INFO);
@@ -90,7 +90,6 @@ class InstallationWizard {
         if (!$answer) return false;
 
         self::$config->setNested("DiskData.disk", $answer);
-        self::$config->save();
 
         // ----------------------------------------------------------------------------------------------------------
         Logger::send("Enter BOOT partition (EXAMPLE: sda1, sdc1, nvme0n1p1)", LogLevel::INFO);
@@ -99,7 +98,6 @@ class InstallationWizard {
         if (!$answer) return false;
 
         self::$config->setNested("DiskData.boot", $answer);
-        self::$config->save();
 
         // ----------------------------------------------------------------------------------------------------------
         Logger::send("Enter SYSTEM partition (EXAMPLE: sda2, sdc2, nvme0n1p2)", LogLevel::INFO);
@@ -108,7 +106,6 @@ class InstallationWizard {
         if (!$answer) return false;
 
         self::$config->setNested("DiskData.system", $answer);
-        self::$config->save();
 
         // ----------------------------------------------------------------------------------------------------------
         Logger::send("Select file system type for system (1 - F2FS, 2 - EXT4, 3 - BTRFS) [1]", LogLevel::INFO);
@@ -122,12 +119,11 @@ class InstallationWizard {
             "3" => "BTRFS"
         ][$answer]);
 
-        self::$config->save();
         return true;
     }
 
     private static function configureUsers(): bool {
-        Utils::clear_screen();
+        Utils::execute("clear");
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter a new username [user]", LogLevel::INFO);
@@ -136,7 +132,6 @@ class InstallationWizard {
         if (!$answer) return false;
 
         self::$config->setNested("UserData.user", $answer);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
         $random = Utils::generatePassword();
@@ -145,15 +140,12 @@ class InstallationWizard {
         $answer = Utils::getInput($random);
 
         self::$config->setNested("UserData.userpassword", $answer);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter a new password (for root [" . $random . "]", LogLevel::INFO);
         $answer = Utils::getInput($random);
 
         self::$config->setNested("UserData.password", $answer);
-        self::$config->save();
-
         return true;
     }
 
@@ -165,7 +157,6 @@ class InstallationWizard {
         if (!$answer) return false;
 
         self::$config->setNested("UserData.hostname", $answer);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter your timezone (Example: America/Chicago) [UTC]", LogLevel::INFO);
@@ -174,8 +165,6 @@ class InstallationWizard {
         if (!$answer) return false;
 
         self::$config->setNested("UserData.timezone", $answer);
-        self::$config->save();
-        
         return true;
     }
 
@@ -188,7 +177,6 @@ class InstallationWizard {
 
         self::$config->setNested("PackageData.kernel",  self::$packages["kernel"][$answer]["packages"]);
         self::$config->setNested("SelectedData.kernel", self::$packages["kernel"][$answer]["type"]);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Select a video driver (1 - INTEL (BUILT-IN), 2 - NVIDIA (PROPRIETARY), 3 - INTEL (BUILT-IN) + NVIDIA (PROPRIETARY), 4 - AMD (DISCRETE), 5 - NOTHING)", LogLevel::INFO);
@@ -199,18 +187,16 @@ class InstallationWizard {
         self::$config->setNested("PackageData.video",  (self::$packages["video"][$answer]["packages"] ?? null));
         self::$config->setNested("ServiceData.video",  (self::$packages["video"][$answer]["video"]    ?? null));
         self::$config->setNested("SelectedData.video", self::$packages["video"][$answer]["type"]);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select a sound driver (1 - PIPEWIRE, 2 - PULSEAUDIO, 3 - NOTHING) [1]", LogLevel::INFO);
+        Logger::send("Select a audio driver (1 - PIPEWIRE, 2 - PULSEAUDIO, 3 - NOTHING) [1]", LogLevel::INFO);
 
         $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2', '3'], true);
         if (!$answer) return false;
 
-        self::$config->setNested("PackageData.sound",  (self::$packages["sound"][$answer]["packages"] ?? null));
-        self::$config->setNested("ServiceData.sound",  (self::$packages["sound"][$answer]["service"]  ?? null));
-        self::$config->setNested("SelectedData.sound", self::$packages["sound"][$answer]["type"]);
-        self::$config->save();
+        self::$config->setNested("PackageData.audio",  (self::$packages["audio"][$answer]["packages"] ?? null));
+        self::$config->setNested("ServiceData.audio",  (self::$packages["audio"][$answer]["service"]  ?? null));
+        self::$config->setNested("SelectedData.audio", self::$packages["audio"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Select the desktop environment (1 - KDE, 2 - GNOME, 3 - XFCE4, 4 - CINNAMON, 5 - BUDGIE, 6 - NOTHING) [1]", LogLevel::INFO);
@@ -221,7 +207,6 @@ class InstallationWizard {
         self::$config->setNested("PackageData.desktop",  (self::$packages["desktop"][$answer]["packages"] ?? null));
         self::$config->setNested("ServiceData.desktop",  (self::$packages["desktop"][$answer]["service"]  ?? null));
         self::$config->setNested("SelectedData.desktop", self::$packages["desktop"][$answer]["type"]);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Select a font (1 - NOTO-FONTS, 2 - NOTHING) [1]", LogLevel::INFO);
@@ -231,20 +216,17 @@ class InstallationWizard {
 
         self::$config->setNested("PackageData.font",  (self::$packages["font"][$answer]["packages"] ?? null));
         self::$config->setNested("SelectedData.font", self::$packages["font"][$answer]["type"]);
-        self::$config->save();
 
         // ---------------------------------------------------------------------------------------------------------
         $packages = "";
         foreach (Utils::getExistingPackages() as $package) $packages .= $package . " ";
 
         self::$config->setNested("PackageData.additionals", rtrim($packages));
-        self::$config->save();
-
         return true;
     }
 
     private static function showInformation(): bool {
-        Utils::clear_screen();
+        Utils::execute("clear");
 
         Logger::send("Installation Confirmation:", LogLevel::DEBUG);
         
@@ -270,7 +252,7 @@ class InstallationWizard {
         Logger::send("CONFIGURATION:",                                                      LogLevel::INFO);
         Logger::send("  KERNEL: "       . self::$config->getNested("SelectedData.kernel"),  LogLevel::INFO);
         Logger::send("  VIDEO DRIVER: " . self::$config->getNested("SelectedData.video"),   LogLevel::INFO);
-        Logger::send("  SOUND DRIVER: " . self::$config->getNested("SelectedData.sound"),   LogLevel::INFO);
+        Logger::send("  AUDIO DRIVER: " . self::$config->getNested("SelectedData.audio"),   LogLevel::INFO);
         Logger::send("  DESKTOP: "      . self::$config->getNested("SelectedData.desktop"), LogLevel::INFO);
         Logger::send("  FONT: "         . self::$config->getNested("SelectedData.font"),    LogLevel::INFO);
 

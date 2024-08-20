@@ -13,7 +13,7 @@ class Utils {
 
     private static ?string $os = null;
 
-    static function getOS($recalculate = false): string {
+    static function getOS(bool $recalculate = false): string {
         if (
             (self::$os === null) ||
             $recalculate
@@ -63,10 +63,6 @@ class Utils {
             system($command, $result_code);
             return $result_code;
         }
-    }
-
-    static function clear_screen(): void {
-        self::execute("clear");
     }
 
     static function validateDevice(?string $choice, string $messageNotFound, string $messageEmpty): string|false {
@@ -208,10 +204,6 @@ class Utils {
     
         Logger::send($message . " &7[&b" . number_format(($end_time - $start_time), 2) . "s&7]", ($isSuccess ? LogLevel::INFO : LogLevel::ERROR));
         return $isSuccess;
-    }  
-    
-    static function sendLogFileToServer(): void {
-        // TODO
     }
 
     private static function readAdditionalPackages(): array {

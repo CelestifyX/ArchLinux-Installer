@@ -57,7 +57,7 @@
         }
     },
     
-    "sound": {
+    "audio": {
         "1": {
             "packages": "pacstrap -i /mnt pipewire pipewire-media-session pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse --noconfirm",
             "type": "PIPEWIRE"

@@ -17,7 +17,7 @@
         "file_system": "",
         "kernel": "",
         "video": "",
-        "sound": "",
+        "audio": "",
         "desktop": "",
         "font": ""
     },
@@ -26,7 +26,7 @@
         "additionals": "",
         "kernel": "",
         "video": "",
-        "sound": "",
+        "audio": "",
         "desktop": "",
         "font": ""
     },
@@ -34,6 +34,6 @@
     "ServiceData": {
         "desktop": "",
         "video": "",
-        "sound": ""
+        "audio": ""
     }
 }

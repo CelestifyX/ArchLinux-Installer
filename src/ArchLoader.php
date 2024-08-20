@@ -54,4 +54,6 @@ namespace {
 
     if (!InstallationWizard::init()) Utils::terminate();
     if (!SystemInstaller::init())    Utils::terminate();
+
+    exit(0);
 }
