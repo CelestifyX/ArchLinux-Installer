@@ -1,0 +1,39 @@
+{
+    "UserData": {
+        "user": "",
+        "password": "",
+        "userpassword": "",
+        "hostname": "",
+        "timezone": ""
+    },
+
+    "DiskData": {
+        "disk": "",
+        "boot": "",
+        "system": ""
+    },
+
+    "SelectedData": {
+        "file_system": "",
+        "kernel": "",
+        "video": "",
+        "sound": "",
+        "desktop": "",
+        "font": ""
+    },
+
+    "PackageData": {
+        "additionals": "",
+        "kernel": "",
+        "video": "",
+        "sound": "",
+        "desktop": "",
+        "font": ""
+    },
+    
+    "ServiceData": {
+        "desktop": "",
+        "video": "",
+        "sound": ""
+    }
+}

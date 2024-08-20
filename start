@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$DIR"
+
+if [ -f ./jre/bin/php ]; then
+	export PHPRC=""
+	PHP_BINARY="./jre/bin/php"
+else
+	echo "Couldn't find a PHP binary in ./jre/bin/php"
+	exit 1
+fi
+
+if [ -f ./src/ArchLoader.php ]; then
+	LAUNCH_FILE="./src/ArchLoader.php"
+else
+	echo "Launch file not found."
+	exit 1
+fi
+
+set +e
+exec "$PHP_BINARY" "$LAUNCH_FILE"
