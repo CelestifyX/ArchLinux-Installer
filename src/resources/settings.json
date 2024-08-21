@@ -1,8 +1,16 @@
 {
     "UserData": {
-        "user": "",
-        "password": "",
-        "userpassword": "",
+        "accounts": {
+            "root": {
+                "password": ""
+            },
+            
+            "user": {
+                "username": "",
+                "password": ""
+            }
+        },
+        
         "hostname": "",
         "timezone": ""
     },

@@ -93,7 +93,7 @@ class SystemInstaller {
 
     private static function setTimeZone(): bool {
         foreach ([
-            ["arch-chroot /mnt /bin/bash -c 'ln -sf /usr/share/zoneinfo/" . self::$config["UserData"]["timezone"] . "' >/dev/null 2>&1", "Setting the timezone"],
+            ["arch-chroot /mnt /bin/bash -c 'ln -sf /usr/share/zoneinfo/" . self::$config["UserData"]["timezone"] . " /etc/localtime' >/dev/null 2>&1", "Setting the timezone"],
             ["arch-chroot /mnt /bin/bash -c 'hwclock --systohc' >/dev/null 2>&1", "Synchronizing the time"]
         ] as [$command, $description]) {
             if (!Utils::runCommandWithProgress($command, $description)) return false;
@@ -132,9 +132,10 @@ class SystemInstaller {
     private static function configureUserAccounts(): bool {
         foreach ([
             ["arch-chroot /mnt /bin/bash -c \"echo '%wheel ALL=(ALL) ALL' | EDITOR='tee -a' visudo\" >/dev/null 2>&1", "Allowing the wheel group to use sudo"],
-            ["arch-chroot /mnt /bin/bash -c 'useradd -m -G wheel -s /bin/bash " . self::$config["UserData"]["user"] . "' >/dev/null 2>&1", "Adding a user to the wheel group"],
-            ["echo root:" . self::$config["UserData"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password for root"],
-            ["echo " . self::$config["UserData"]["user"] . ":" . self::$config["UserData"]["userpassword"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password for " . self::$config["UserData"]["user"]]
+            ["arch-chroot /mnt /bin/bash -c 'echo Defaults pwfeedback >> /etc/sudoers' >/dev/null 2>&1", "Added pwfeedback to /etc/sudoers"],
+            ["arch-chroot /mnt /bin/bash -c 'useradd -m -G wheel -s /bin/bash " . self::$config["UserData"]["accounts"]["user"]["username"] . "' >/dev/null 2>&1", "Adding a user to the wheel group"],
+            ["echo root:" . self::$config["UserData"]["accounts"]["root"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password for root"],
+            ["echo " . self::$config["UserData"]["accounts"]["user"]["username"] . ":" . self::$config["UserData"]["accounts"]["user"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password for " . self::$config["UserData"]["accounts"]["user"]["username"]]
         ] as [$command, $description]) {
             if (!Utils::runCommandWithProgress($command, $description)) return false;
         }
@@ -199,9 +200,7 @@ class SystemInstaller {
 
     private static function finalizeConfiguration(): bool {
         foreach ([
-            ["arch-chroot /mnt /bin/bash -c 'sed -i s/#greeter-session=lightdm-slick-greeter/greeter-session=lightdm-slick-greeter/g /etc/lightdm/lightdm.conf' >/dev/null 2>&1; RETVAL=$?", "Activating the greeter-session"],
             ["arch-chroot /mnt /bin/bash -c 'systemctl enable NetworkManager dhcpcd' >/dev/null 2>&1", "Enabling NetworkManager and dhcpcd services"],
-            ["arch-chroot /mnt /bin/bash -c 'echo Defaults pwfeedback >> /etc/sudoers' >/dev/null 2>&1", "Added pwfeedback to /etc/sudoers"],
             ["arch-chroot /mnt /bin/bash -c 'exit' >/dev/null 2>&1", "Leaving the arch-chroot environment"],
             ["umount -R /mnt >/dev/null 2>&1", "Unmounts all partitions mounted on /mnt."]
         ] as [$command, $description]) {

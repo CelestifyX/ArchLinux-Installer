@@ -131,7 +131,7 @@ class InstallationWizard {
         $answer = Utils::validateInput(Utils::getInput("user"), ['root', 'localhost'], "Username \"%valid\" is not allowed. Please choose another username.", "user");
         if (!$answer) return false;
 
-        self::$config->setNested("UserData.user", $answer);
+        self::$config->setNested("UserData.accounts.user.username", $answer);
 
         // ---------------------------------------------------------------------------------------------------------
         $random = Utils::generatePassword();
@@ -139,13 +139,13 @@ class InstallationWizard {
         Logger::send("Enter a new password (for " . $answer . " [" . $random . "]", LogLevel::INFO);
         $answer = Utils::getInput($random);
 
-        self::$config->setNested("UserData.userpassword", $answer);
+        self::$config->setNested("UserData.accounts.user.password", $answer);
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter a new password (for root [" . $random . "]", LogLevel::INFO);
         $answer = Utils::getInput($random);
 
-        self::$config->setNested("UserData.password", $answer);
+        self::$config->setNested("UserData.accounts.root.password", $answer);
         return true;
     }
 
@@ -238,9 +238,9 @@ class InstallationWizard {
         
         echo("\n");
 
-        Logger::send("ACCOUNTS:",                                                                                                 LogLevel::INFO);
-        Logger::send("  " . self::$config->getNested("UserData.user") . ": " . self::$config->getNested("UserData.userpassword"), LogLevel::INFO);
-        Logger::send("  root: "                                              . self::$config->getNested("UserData.password"),     LogLevel::INFO);
+        Logger::send("ACCOUNTS:",                                                                                                                             LogLevel::INFO);
+        Logger::send("  root: " . self::$config->getNested("UserData.accounts.root.password"),                                                                LogLevel::INFO);
+        Logger::send("  " . self::$config->getNested("UserData.accounts.user.username") . ": " . self::$config->getNested("UserData.accounts.user.password"), LogLevel::INFO);
 
         echo("\n");
 
