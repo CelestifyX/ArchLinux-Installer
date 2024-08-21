@@ -21,6 +21,6 @@ An Arch-Linux installer written in PHP.
 
 ## Usage
 
-- Partition your disk: **Partition 1 - EFI** (512MB or more), **Partition 2 - SYSTEM** (use the remaining space).
+- [Partition your disk: **Partition 1 - EFI** (512MB or more), **Partition 2 - SYSTEM** (use the remaining space).](GUIDE.md)
 - Run `./start` to start the installation process.
 - Follow the prompts to configure your Arch Linux installation.
