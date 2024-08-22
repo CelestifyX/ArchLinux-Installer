@@ -136,13 +136,13 @@ class InstallationWizard {
         // ---------------------------------------------------------------------------------------------------------
         $random = Utils::generatePassword();
 
-        Logger::send("Enter a new password (for " . $answer . " [" . $random . "]", LogLevel::INFO);
+        Logger::send("Enter a new password (for " . $answer . ") [" . $random . "]", LogLevel::INFO);
         $answer = Utils::getInput($random);
 
         self::$config->setNested("UserData.accounts.user.password", $answer);
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Enter a new password (for root [" . $random . "]", LogLevel::INFO);
+        Logger::send("Enter a new password (for root) [" . $random . "]", LogLevel::INFO);
         $answer = Utils::getInput($random);
 
         self::$config->setNested("UserData.accounts.root.password", $answer);
