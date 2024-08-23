@@ -146,6 +146,14 @@ class InstallationWizard {
         $answer = Utils::getInput($random);
 
         self::$config->setNested("UserData.accounts.root.password", $answer);
+
+        // ---------------------------------------------------------------------------------------------------------
+        Logger::send("Please confirm if you want to enable autologin for the user [y/N]:", LogLevel::INFO);
+
+        $answer = Utils::getInput(null);
+        if (in_array($answer, ['y', 'yes', '1'])) $answer = "enable";
+
+        self::$config->setNested("UserData.accounts.user.autologin", $answer);
         return true;
     }
 

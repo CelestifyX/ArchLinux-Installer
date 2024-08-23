@@ -140,6 +140,19 @@ class SystemInstaller {
             if (!Utils::runCommandWithProgress($command, $description)) return false;
         }
 
+        if (self::$config["UserData"]["accounts"]["user"]["autologin"] === "enable") {
+            $config = "/etc/systemd/system/getty@tty1.service.d/override.conf";
+
+            foreach ([
+                ["mkdir -p " . dirname($config),   "Creating directory for autologin config"],
+                ["echo '[Service]' > "  . $config, "Initializing autologin config file"],
+                ["echo 'ExecStart=' >> " . $config, "Writing ExecStart line"],
+                ["echo 'ExecStart=-/usr/bin/agetty --autologin " . self::$config["UserData"]["accounts"]["user"]["username"] . " --noclear %I \$TERM' >> " . $config, "Writing autologin command with user"]
+            ] as [$command, $description]) {
+                if (!Utils::runCommandWithProgress($command, $description)) return false;
+            }
+        }
+
         return true;
     }
 

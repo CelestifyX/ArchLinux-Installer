@@ -54,7 +54,7 @@ class Utils {
 		return (($input === "") ? $default : $input);
 	}
 
-    static function execute(string $command, bool $shell = false): int|string|null {
+    static function execute(string $command, bool $shell = false): mixed {
         if ($shell) {
             return shell_exec($command);
         } else {
@@ -196,7 +196,7 @@ class Utils {
         $start_time  = microtime(true);
         Logger::send("&7[&l&6WAIT&r&7] &f" . $description, LogLevel::INFO);
     
-        $return_code = Utils::execute($command);
+        $return_code = self::execute($command);
         $end_time    = microtime(true);
     
         $isSuccess   = ($return_code === 0);
