@@ -47,7 +47,7 @@ namespace {
 		exit(1);
 	}
 
-    if (Utils::execute("if [ -f /run/archiso/airootfs/version ]; then exit 0; else exit 1; fi") !== 0) {
+    if (Utils::execute("if [ ! -f /run/archiso/airootfs/version ]; then exit 0; else exit 1; fi") !== 0) {
         Logger::send("This script must be run in an Arch Linux LiveCD environment.", LogLevel::ERROR);
         exit(1);
     }

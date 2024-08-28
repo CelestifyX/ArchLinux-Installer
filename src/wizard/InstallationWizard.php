@@ -87,7 +87,7 @@ class InstallationWizard {
         Logger::send("Enter the drive name (EXAMPLE: sda, sdc, nvme0n1)", LogLevel::INFO);
 
         $answer = Utils::validateDevice(Utils::getInput(null), "Disk %device not found.", "You didn`t enter any disk name.");
-        if (!$answer) return false;
+        if ($answer === false) return false;
 
         self::$config->setNested("DiskData.disk", $answer);
 
@@ -95,7 +95,7 @@ class InstallationWizard {
         Logger::send("Enter BOOT partition (EXAMPLE: sda1, sdc1, nvme0n1p1)", LogLevel::INFO);
 
         $answer = Utils::validateDevice(Utils::getInput(null), "Partition %device not found.", "You didn`t enter any disk name.");
-        if (!$answer) return false;
+        if ($answer === false) return false;
 
         self::$config->setNested("DiskData.boot", $answer);
 
@@ -103,20 +103,21 @@ class InstallationWizard {
         Logger::send("Enter SYSTEM partition (EXAMPLE: sda2, sdc2, nvme0n1p2)", LogLevel::INFO);
 
         $answer = Utils::validateDevice(Utils::getInput(null), "Partition %device not found.", "You didn`t enter any disk name.");
-        if (!$answer) return false;
+        if ($answer === false) return false;
 
         self::$config->setNested("DiskData.system", $answer);
 
         // ----------------------------------------------------------------------------------------------------------
-        Logger::send("Select file system type for system (1 - F2FS, 2 - EXT4, 3 - BTRFS) [1]", LogLevel::INFO);
+        Logger::send("Select file system type for system (0 - F2FS, 1 - EXT4, 2 - BTRFS, 3 - XFS) [0]", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2', '3'], true);
-        if (!$answer) return false;
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3'], true);
+        if ($answer === false) return false;
 
         self::$config->setNested("SelectedData.file_system", [
-            "1" => "F2FS",
-            "2" => "EXT4",
-            "3" => "BTRFS"
+            "0" => "F2FS",
+            "1" => "EXT4",
+            "2" => "BTRFS",
+            "3" => "XFS"
         ][$answer]);
 
         return true;
@@ -129,7 +130,7 @@ class InstallationWizard {
         Logger::send("Enter a new username [user]", LogLevel::INFO);
 
         $answer = Utils::validateInput(Utils::getInput("user"), ['root', 'localhost'], "Username \"%valid\" is not allowed. Please choose another username.", "user");
-        if (!$answer) return false;
+        if ($answer === false) return false;
 
         self::$config->setNested("UserData.accounts.user.username", $answer);
 
@@ -162,7 +163,7 @@ class InstallationWizard {
         Logger::send("Enter your hostname [usr]", LogLevel::INFO);
 
         $answer = Utils::validateInput(Utils::getInput("usr"), ['localhost'], "The hostname '%valid' is not suitable. Please choose another hostname.", "usr");
-        if (!$answer) return false;
+        if ($answer === false) return false;
 
         self::$config->setNested("UserData.hostname", $answer);
 
@@ -170,7 +171,7 @@ class InstallationWizard {
         Logger::send("Enter your timezone (Example: America/Chicago) [UTC]", LogLevel::INFO);
 
         $answer = Utils::validateTimezone(Utils::getInput("UTC"), "UTC");
-        if (!$answer) return false;
+        if ($answer === false) return false;
 
         self::$config->setNested("UserData.timezone", $answer);
         return true;
@@ -178,58 +179,58 @@ class InstallationWizard {
 
     private static function configurePackages(): bool {
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select a kernel (1 - LINUX (INTEL), 2 - LINUX-ZEN (INTEL), 3 - LINUX LTS (INTEL), 4 - LINUX (AMD), 5 - LINUX-ZEN (AMD), 6 - LINUX LTS (AMD))", LogLevel::INFO);
+        Logger::send("Select a kernel (0 - LINUX (INTEL), 1 - LINUX-ZEN (INTEL), 2 - LINUX LTS (INTEL), 3 - LINUX (AMD), 4 - LINUX-ZEN (AMD), 5 - LINUX LTS (AMD))", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2', '3', '4', '5', '6']);
-        if (!$answer) return false;
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3', '4', '5']);
+        if ($answer === false) return false;
 
-        self::$config->setNested("PackageData.kernel",  self::$packages["kernel"][$answer]["packages"]);
+        self::$config->setNested("PackageData.kernel",  "pacstrap -i /mnt " . Utils::arrayToString(self::$packages["kernel"][$answer]["packages"]) . " --noconfirm");
         self::$config->setNested("SelectedData.kernel", self::$packages["kernel"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select a video driver (1 - INTEL (BUILT-IN), 2 - NVIDIA (PROPRIETARY), 3 - INTEL (BUILT-IN) + NVIDIA (PROPRIETARY), 4 - AMD (DISCRETE), 5 - NOTHING)", LogLevel::INFO);
+        Logger::send("Select a video driver (0 - INTEL (BUILT-IN), 1 - NVIDIA (PROPRIETARY), 2 - INTEL (BUILT-IN) + NVIDIA (PROPRIETARY), 3 - AMD (DISCRETE), 4 - NOTHING)", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2', '3', '4', '5']);
-        if (!$answer) return false;
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3', '4']);
+        if ($answer === false) return false;
 
-        self::$config->setNested("PackageData.video",  (self::$packages["video"][$answer]["packages"] ?? null));
-        self::$config->setNested("ServiceData.video",  (self::$packages["video"][$answer]["video"]    ?? null));
+        self::$config->setNested("PackageData.video",  (!empty(self::$packages["video"][$answer]["packages"] ?? []) ? "pacstrap -i /mnt " . Utils::arrayToString(self::$packages["video"][$answer]["packages"]) . " --noconfirm" : null));
+        self::$config->setNested("ServiceData.video",  (!empty(self::$packages["video"][$answer]["service"]  ?? []) ? "systemctl enable " . Utils::arrayToString(self::$packages["video"][$answer]["service"])  . " --force"     : null));
         self::$config->setNested("SelectedData.video", self::$packages["video"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select a audio driver (1 - PIPEWIRE, 2 - PULSEAUDIO, 3 - NOTHING) [1]", LogLevel::INFO);
+        Logger::send("Select a audio driver (0 - PIPEWIRE, 1 - PULSEAUDIO, 2 - ALSA, 3 - NOTHING) [0]", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2', '3'], true);
-        if (!$answer) return false;
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3'], true);
+        if ($answer === false) return false;
 
-        self::$config->setNested("PackageData.audio",  (self::$packages["audio"][$answer]["packages"] ?? null));
-        self::$config->setNested("ServiceData.audio",  (self::$packages["audio"][$answer]["service"]  ?? null));
+        self::$config->setNested("PackageData.audio",  (!empty(self::$packages["audio"][$answer]["packages"] ?? []) ? "pacstrap -i /mnt " . Utils::arrayToString(self::$packages["audio"][$answer]["packages"]) . " --noconfirm" : null));
+        self::$config->setNested("ServiceData.audio",  (!empty(self::$packages["audio"][$answer]["service"]  ?? []) ? "systemctl enable " . Utils::arrayToString(self::$packages["audio"][$answer]["service"])  . " --force"     : null));
         self::$config->setNested("SelectedData.audio", self::$packages["audio"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select the desktop environment (1 - KDE, 2 - GNOME, 3 - XFCE4, 4 - CINNAMON, 5 - BUDGIE, 6 - NOTHING) [1]", LogLevel::INFO);
+        Logger::send("Select the desktop environment (0 - KDE, 1 - GNOME, 2 - XFCE4, 3 - CINNAMON, 4 - BUDGIE, 5 - NOTHING) [0]", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2', '3', '4', '5', '6'], true);
-        if (!$answer) return false;
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3', '4', '5'], true);
+        if ($answer === false) return false;
 
-        self::$config->setNested("PackageData.desktop",  (self::$packages["desktop"][$answer]["packages"] ?? null));
-        self::$config->setNested("ServiceData.desktop",  (self::$packages["desktop"][$answer]["service"]  ?? null));
+        self::$config->setNested("PackageData.desktop",  (!empty(self::$packages["desktop"][$answer]["packages"] ?? []) ? "pacstrap -i /mnt " . Utils::arrayToString(self::$packages["desktop"][$answer]["packages"]) . " --noconfirm" : null));
+        self::$config->setNested("ServiceData.desktop",  (!empty(self::$packages["desktop"][$answer]["service"]  ?? []) ? "systemctl enable " . Utils::arrayToString(self::$packages["desktop"][$answer]["service"])  . " --force"     : null));
         self::$config->setNested("SelectedData.desktop", self::$packages["desktop"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select a font (1 - NOTO-FONTS, 2 - NOTHING) [1]", LogLevel::INFO);
+        Logger::send("Select a font (0 - NOTO-FONTS, 1 - NOTHING) [0]", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['1', '2'], true);
-        if (!$answer) return false;
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1'], true);
+        if ($answer === false) return false;
 
-        self::$config->setNested("PackageData.font",  (self::$packages["font"][$answer]["packages"] ?? null));
+        self::$config->setNested("PackageData.font",  (!empty(self::$packages["font"][$answer]["packages"] ?? []) ? "pacstrap -i /mnt " . Utils::arrayToString(self::$packages["font"][$answer]["packages"]) . " --noconfirm" : null));
         self::$config->setNested("SelectedData.font", self::$packages["font"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
         $packages = "";
         foreach (Utils::getExistingPackages() as $package) $packages .= $package . " ";
 
-        self::$config->setNested("PackageData.additionals", rtrim($packages));
+        self::$config->setNested("PackageData.additionals", "pacstrap -i /mnt " . rtrim($packages) . " --noconfirm");
         return true;
     }
 

@@ -1,122 +1,355 @@
 {
-    "kernel": {
-        "1": {
-            "packages": "pacstrap -i /mnt base base-devel coreutils util-linux linux linux-headers linux-firmware intel-ucode iucode-tool nano dhcpcd dhclient networkmanager network-manager-applet --noconfirm",
-            "type": "LINUX (INTEL)"
+    "kernel": [
+        {
+            "type": "LINUX (INTEL)",
+            "packages": [
+                "base",
+                "base-devel",
+                "coreutils",
+                "util-linux",
+                "linux",
+                "linux-headers",
+                "linux-firmware",
+                "intel-ucode",
+                "iucode-tool",
+                "nano",
+                "dhcpcd",
+                "dhclient",
+                "networkmanager",
+                "network-manager-applet"
+            ]
         },
 
-        "2": {
-            "packages": "pacstrap -i /mnt base base-devel coreutils util-linux linux-zen linux-zen-headers linux-firmware intel-ucode iucode-tool nano dhcpcd dhclient networkmanager network-manager-applet --noconfirm",
-            "type": "LINUX-ZEN (INTEL)"
+        {
+            "type": "LINUX-ZEN (INTEL)",
+            "packages": [
+                "base",
+                "base-devel",
+                "coreutils",
+                "util-linux",
+                "linux-zen",
+                "linux-zen-headers",
+                "linux-firmware",
+                "intel-ucode",
+                "iucode-tool",
+                "nano",
+                "dhcpcd",
+                "dhclient",
+                "networkmanager",
+                "network-manager-applet"
+            ]
         },
 
-        "3": {
-            "packages": "pacstrap -i /mnt base base-devel coreutils util-linux linux-lts linux-lts-headers linux-firmware intel-ucode iucode-tool nano dhcpcd dhclient networkmanager network-manager-applet --noconfirm",
-            "type": "LINUX-LTS (INTEL)"
+        {
+            "type": "LINUX-LTS (INTEL)",
+            "packages": [
+                "base",
+                "base-devel",
+                "coreutils",
+                "util-linux",
+                "linux-lts",
+                "linux-lts-headers",
+                "linux-firmware",
+                "intel-ucode",
+                "iucode-tool",
+                "nano",
+                "dhcpcd",
+                "dhclient",
+                "networkmanager",
+                "network-manager-applet"
+            ]
+        },
+        
+        {
+            "type": "LINUX (AMD)",
+            "packages": [
+                "base",
+                "base-devel",
+                "coreutils",
+                "util-linux",
+                "linux",
+                "linux-headers",
+                "linux-firmware",
+                "amd-ucode",
+                "archlinux-keyring",
+                "nano",
+                "dhcpcd",
+                "dhclient",
+                "networkmanager",
+                "network-manager-applet"
+            ]
         },
 
-        "4": {
-            "packages": "pacstrap -i /mnt base base-devel coreutils util-linux linux linux-headers linux-firmware amd-ucode archlinux-keyring nano dhcpcd dhclient networkmanager network-manager-applet --noconfirm",
-            "type": "LINUX (AMD)"
+        {
+            "type": "LINUX-ZEN (AMD)",
+            "packages": [
+                "base",
+                "base-devel",
+                "coreutils",
+                "util-linux",
+                "linux-zen",
+                "linux-zen-headers",
+                "linux-firmware",
+                "amd-ucode",
+                "archlinux-keyring",
+                "nano",
+                "dhcpcd",
+                "dhclient",
+                "networkmanager",
+                "network-manager-applet"
+            ]
         },
-
-        "5": {
-            "packages": "pacstrap -i /mnt base base-devel coreutils util-linux linux-zen linux-zen-headers linux-firmware amd-ucode archlinux-keyring nano dhcpcd dhclient networkmanager network-manager-applet --noconfirm",
-            "type": "LINUX-ZEN (AMD)"
-        },
-
-        "6": {
-            "packages": "pacstrap -i /mnt base base-devel coreutils util-linux linux-lts linux-lts-headers linux-firmware amd-ucode archlinux-keyring nano dhcpcd dhclient networkmanager network-manager-applet --noconfirm",
-            "type": "LINUX-LTS (AMD)"
+        
+        {
+            "type": "LINUX-LTS (AMD)",
+            "packages": [
+                "base",
+                "base-devel",
+                "coreutils",
+                "util-linux",
+                "linux-lts",
+                "linux-lts-headers",
+                "linux-firmware",
+                "amd-ucode",
+                "archlinux-keyring",
+                "nano",
+                "dhcpcd",
+                "dhclient",
+                "networkmanager",
+                "network-manager-applet"
+            ]
         }
-    },
+    ],
 
-    "video": {
-        "1": {
-            "packages": "pacstrap -i /mnt mesa mesa-demos xf86-video-intel lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver lib32-libva-intel-driver --noconfirm",
-            "type": "INTEL"
+    "video": [
+        {
+            "type": "INTEL",
+            "packages": [
+                "mesa",
+                "mesa-demos",
+                "xf86-video-intel",
+                "lib32-mesa",
+                "vulkan-intel",
+                "lib32-vulkan-intel",
+                "vulkan-icd-loader",
+                "lib32-vulkan-icd-loader",
+                "libva-intel-driver",
+                "lib32-libva-intel-driver"
+            ]
         },
 
-        "2": {
-            "packages": "pacstrap -i /mnt vulkan-icd-loader lib32-vulkan-icd-loader nvidia nvidia-utils lib32-nvidia-utils vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia nvidia-settings --noconfirm",
-            "type": "NVIDIA (NONFREE)"
+        {
+            "type": "NVIDIA (NONFREE)",
+            "packages": [
+                "vulkan-icd-loader",
+                "lib32-vulkan-icd-loader",
+                "nvidia",
+                "nvidia-utils",
+                "lib32-nvidia-utils",
+                "lib32-opencl-nvidia",
+                "opencl-nvidia",
+                "nvidia-settings"
+            ]
         },
 
-        "3": {
-            "packages": "pacstrap -i /mnt xf86-video-intel vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader libva-intel-driver lib32-libva-intel-driver nvidia nvidia-settings nvidia-prime --noconfirm",
-            "type": "INTEL + NVIDIA (NONFREE)"
+        {
+            "type": "INTEL + NVIDIA (NONFREE)",
+            "packages": [
+                "xf86-video-intel",
+                "vulkan-intel",
+                "lib32-vulkan-intel",
+                "vulkan-icd-loader",
+                "lib32-vulkan-icd-loader",
+                "libva-intel-driver",
+                "lib32-libva-intel-driver",
+                "nvidia",
+                "nvidia-settings",
+                "nvidia-prime"
+            ]
         },
 
-        "4": {
-            "packages": "pacstrap -i /mnt xf86-video-ati xf86-video-amdgpu mesa mesa-demos lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader amdvlk lib32-amdvlk --noconfirm",
-            "type": "AMD"
+        {
+            "type": "AMD",
+            "packages": [
+                "xf86-video-ati",
+                "xf86-video-amdgpu",
+                "mesa",
+                "mesa-demos",
+                "lib32-mesa",
+                "vulkan-radeon",
+                "lib32-vulkan-radeon",
+                "vulkan-icd-loader",
+                "lib32-vulkan-icd-loader",
+                "amdvlk",
+                "lib32-amdvlk"
+            ]
         },
 
-        "5": {
+        {
             "type": "NOTHING"
         }
-    },
-    
-    "audio": {
-        "1": {
-            "packages": "pacstrap -i /mnt pipewire pipewire-media-session pipewire-audio pipewire-alsa pipewire-jack pipewire-pulse --noconfirm",
-            "type": "PIPEWIRE"
+    ],
+
+    "audio": [
+        {
+            "type": "PIPEWIRE",
+            "packages": [
+                "pipewire",
+                "pipewire-media-session",
+                "pipewire-audio",
+                "pipewire-alsa",
+                "pipewire-jack",
+                "pipewire-pulse"
+            ]
         },
 
-        "2": {
-            "packages": "pacstrap -i /mnt pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack pulseaudio-zeroconf --noconfirm",
-            "type": "PULSEAUDIO"
+        {
+            "type": "PULSEAUDIO",
+            "packages": [
+                "pulseaudio",
+                "pulseaudio-alsa",
+                "pulseaudio-bluetooth",
+                "pulseaudio-jack",
+                "pulseaudio-zeroconf"
+            ]
         },
 
-        "3": {
+        {
+            "type": "ALSA",
+            "packages": [
+                "alsa-utils",
+                "alsa-tools",
+                "alsa-plugins",
+                "alsa-lib",
+                "alsa-card-profiles"
+            ]
+        },
+
+        {
             "type": "NOTHING"
         }
-    },
+    ],
 
-    "desktop": {
-        "1": {
-            "packages": "pacstrap -i /mnt xorg xorg-server bluez bluez-utils xorg-xwayland plasma sddm kate dolphin konsole vvave gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav ark gwenview sddm-kcm spectacle fwupd power-profiles-daemon kdeplasma-addons --noconfirm",
-            "service": "systemctl enable sddm bluetooth --force",
-            "type": "KDE PLASMA"
+    "desktop": [
+        {
+            "type": "KDE PLASMA",
+            "packages": [
+                "xorg",
+                "xorg-server",
+                "bluez",
+                "bluez-utils",
+                "xorg-xwayland",
+                "plasma",
+                "sddm",
+                "kate",
+                "dolphin",
+                "konsole",
+                "vvave",
+                "gst-plugins-base",
+                "gst-plugins-good",
+                "gst-plugins-bad",
+                "gst-plugins-ugly",
+                "gst-libav",
+                "ark",
+                "gwenview",
+                "sddm-kcm",
+                "spectacle",
+                "fwupd",
+                "power-profiles-daemon",
+                "kdeplasma-addons"
+            ],
+
+            "service": [
+                "sddm",
+                "bluetooth"
+            ]
         },
 
-        "2": {
-            "packages": "pacstrap -i /mnt xorg xorg-server gnome nautilus gnome-terminal gnome-tweaks gnome-shell-extensions rhythmbox gdm --noconfirm",
-            "service": "systemctl enable gdm --force",
-            "type": "GNOME"
+        {
+            "type": "GNOME",
+            "packages": [
+                "xorg",
+                "xorg-server",
+                "gnome",
+                "nautilus",
+                "gnome-terminal",
+                "gnome-tweaks",
+                "gnome-shell-extensions",
+                "rhythmbox",
+                "gdm"
+            ],
+
+            "service": [
+                "gdm"
+            ]
         },
 
-        "3": {
-            "packages": "pacstrap -i /mnt xorg xorg-server xfce4 xfce4-goodies lightdm lightdm-gtk-greeter --noconfirm",
-            "service": "systemctl enable lightdm --force",
-            "type": "XFCE4"
+        {
+            "type": "XFCE4",
+            "packages": [
+                "xorg",
+                "xorg-server",
+                "xfce4",
+                "xfce4-goodies",
+                "lightdm",
+                "lightdm-gtk-greeter"
+            ],
+
+            "service": [
+                "lightdm"
+            ]
         },
 
-        "4": {
-            "packages": "pacstrap -i /mnt xorg xorg-server cinnamon gnome-terminal lightdm lightdm-gtk-greeter --noconfirm",
-            "service": "systemctl enable lightdm --force",
-            "type": "CINNAMON"
+        {
+            "type": "CINNAMON",
+            "packages": [
+                "xorg",
+                "xorg-server",
+                "cinnamon",
+                "gnome-terminal",
+                "lightdm",
+                "lightdm-gtk-greeter"
+            ],
+
+            "service": [
+                "lightdm"
+            ]
         },
 
-        "5": {
-            "packages": "pacstrap -i /mnt xorg xorg-server budgie-desktop lightdm lightdm-gtk-greeter --noconfirm",
-            "service": "systemctl enable lightdm --force",
-            "type": "BUDGIE"
+        {
+            "type": "BUDGIE",
+            "packages": [
+                "xorg",
+                "xorg-server",
+                "budgie-desktop",
+                "lightdm",
+                "lightdm-gtk-greeter"
+            ],
+
+            "service": [
+                "lightdm"
+            ]
         },
 
-        "6": {
+        {
             "type": "NOTHING"
         }
-    },
+    ],
 
-    "font": {
-        "1": {
-            "packages": "pacstrap -i /mnt noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-nerd-fonts-symbols --noconfirm",
-            "type": "NOTO-FONTS"
+    "font": [
+        {
+            "type": "NOTO-FONTS",
+            "packages": [
+                "noto-fonts",
+                "noto-fonts-cjk",
+                "noto-fonts-emoji",
+                "noto-fonts-extra",
+                "ttf-nerd-fonts-symbols"
+            ]
         },
 
-        "2": {
+        {
             "type": "NOTHING"
         }
-    }
+    ]
 }

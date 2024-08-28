@@ -58,7 +58,8 @@ class SystemInstaller {
         $commands    = [
             "F2FS"  => "mkfs.f2fs -f /dev/"  . self::$config["DiskData"]["system"],
             "EXT4"  => "mkfs.ext4 -f /dev/"  . self::$config["DiskData"]["system"],
-            "BTRFS" => "mkfs.btrfs -f /dev/" . self::$config["DiskData"]["system"]
+            "BTRFS" => "mkfs.btrfs -f /dev/" . self::$config["DiskData"]["system"],
+            "XFS"   => "mkfs.xfs -f /dev/"   . self::$config["DiskData"]["system"]
         ];
 
         if (!isset($commands[$file_system]))                                                                                                    return false;
@@ -205,7 +206,7 @@ class SystemInstaller {
 
         if (!empty(self::$config["PackageData"]["additionals"])) {
             $formatted_packages = implode(", ", array_filter(explode(" ", self::$config["PackageData"]["additionals"])));
-            if (!Utils::runCommandWithProgress("pacstrap -i /mnt " . self::$config["PackageData"]["additionals"] . " --noconfirm >/dev/null 2>&1", "Installing additional packages " . $formatted_packages)) return false;
+            if (!Utils::runCommandWithProgress(self::$config["PackageData"]["additionals"] . " --noconfirm >/dev/null 2>&1", "Installing additional packages " . $formatted_packages)) return false;
         }
 
         return true;

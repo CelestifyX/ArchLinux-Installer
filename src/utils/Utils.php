@@ -90,13 +90,13 @@ class Utils {
         }
     }
 
-    static function validateChoice(?string $choice, array $validChoices, bool $defaultToOne = false): string|false {
+    static function validateChoice(?string $choice, array $validChoices, bool $defaultToZero = false): string|false {
         while (true) {
             if (
                 empty($choice) and
-                $defaultToOne
+                $defaultToZero
             ) {
-                return "1";
+                return "0";
                 break;
             }
 
@@ -204,6 +204,10 @@ class Utils {
     
         Logger::send($message . " &7[&b" . number_format(($end_time - $start_time), 2) . "s&7]", ($isSuccess ? LogLevel::INFO : LogLevel::ERROR));
         return $isSuccess;
+    }
+
+    static function arrayToString(array $list): string {
+        return implode(' ', $list);
     }
 
     private static function readAdditionalPackages(): array {
