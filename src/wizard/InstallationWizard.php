@@ -236,7 +236,6 @@ class InstallationWizard {
 
     private static function showInformation(): bool {
         Utils::execute("clear");
-
         Logger::send("Installation Confirmation:", LogLevel::DEBUG);
         
         echo("\n");
@@ -253,8 +252,8 @@ class InstallationWizard {
 
         echo("\n");
 
-        Logger::send("TIMEZONE: "  . self::$config->getNested("UserData.timezone"), LogLevel::INFO);
-        Logger::send("HOSTNAME: "  . self::$config->getNested("UserData.hostname"), LogLevel::INFO);
+        Logger::send("TIMEZONE: " . self::$config->getNested("UserData.timezone"), LogLevel::INFO);
+        Logger::send("HOSTNAME: " . self::$config->getNested("UserData.hostname"), LogLevel::INFO);
 
         echo("\n");
 
