@@ -247,14 +247,14 @@ class InstallationWizard {
         
         echo("\n");
 
-        Logger::send("ACCOUNTS:",                                                                                                                             LogLevel::INFO);
-        Logger::send("  root: " . self::$config->getNested("UserData.accounts.root.password"),                                                                LogLevel::INFO);
-        Logger::send("  " . self::$config->getNested("UserData.accounts.user.username") . ": " . self::$config->getNested("UserData.accounts.user.password"), LogLevel::INFO);
+        Logger::send("ACCOUNTS:",                                                                                                                                                                                                                                              LogLevel::INFO);
+        Logger::send("  root: " . self::$config->getNested("UserData.accounts.root.password"),                                                                                                                                                                                 LogLevel::INFO);
+        Logger::send("  " . self::$config->getNested("UserData.accounts.user.username") . ": " . self::$config->getNested("UserData.accounts.user.password") . ", AUTOLOGIN: " . ((self::$config->getNested("UserData.accounts.user.autologin") === "enable") ? "YES" : "NO"), LogLevel::INFO);
 
         echo("\n");
 
-        Logger::send("TIMEZONE: " . self::$config->getNested("UserData.timezone"), LogLevel::INFO);
-        Logger::send("HOSTNAME: " . self::$config->getNested("UserData.hostname"), LogLevel::INFO);
+        Logger::send("TIMEZONE: "  . self::$config->getNested("UserData.timezone"), LogLevel::INFO);
+        Logger::send("HOSTNAME: "  . self::$config->getNested("UserData.hostname"), LogLevel::INFO);
 
         echo("\n");
 
@@ -267,7 +267,7 @@ class InstallationWizard {
 
         if (!empty(self::$config->getNested("PackageData.additionals"))) {
             echo("\n");
-            Logger::send("ADDITIONAL PACKAGES: " . implode(", ", array_filter(explode(" ", self::$config->getNested("PackageData.additionals")))), LogLevel::INFO);
+            Logger::send("ADDITIONAL PACKAGES: " . implode(", ", Utils::getExistingPackages()), LogLevel::INFO);
         }
 
         echo("\n\n");
