@@ -205,8 +205,7 @@ class SystemInstaller {
         }
 
         if (!empty(self::$config["PackageData"]["additionals"])) {
-            $formatted_packages = implode(", ", array_filter(explode(" ", self::$config["PackageData"]["additionals"])));
-            if (!Utils::runCommandWithProgress(self::$config["PackageData"]["additionals"] . " --noconfirm >/dev/null 2>&1", "Installing additional packages " . $formatted_packages)) return false;
+            if (!Utils::runCommandWithProgress(self::$config["PackageData"]["additionals"] . " --noconfirm >/dev/null 2>&1", "Installing additional packages " . implode(", ", Utils::getExistingPackages()))) return false;
         }
 
         return true;
