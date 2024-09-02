@@ -162,7 +162,7 @@ class InstallationWizard {
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter your hostname [usr]", LogLevel::INFO);
 
-        $answer = Utils::validateInput(strtlower(Utils::getInput("usr")), ['localhost'], "The hostname '%valid' is not suitable. Please choose another hostname.", "usr");
+        $answer = Utils::validateInput(strtolower(Utils::getInput("usr")), ['localhost'], "The hostname '%valid' is not suitable. Please choose another hostname.", "usr");
         if ($answer === false) return false;
 
         self::$config->setNested("UserData.hostname", $answer);
