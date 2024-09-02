@@ -41,7 +41,7 @@ class InstallationWizard {
         Logger::send("Before starting the Arch Linux installer, you need to partition your disk.", LogLevel::INFO);
         Logger::send("Have you partitioned the disk? [Y/n]",                                       LogLevel::NOTICE);
 
-        $answer = Utils::getInput("y");
+        $answer = strtolower(Utils::getInput("y"));
         if (!in_array($answer, ['y', 'yes', '1'])) return false;
 
         return true;
@@ -53,7 +53,7 @@ class InstallationWizard {
         Logger::send("By proceeding, you acknowledge that the author is not responsible for any incorrect actions.", LogLevel::INFO);
         Logger::send("Do you want to continue? [Y/n]",                                                               LogLevel::NOTICE);
 
-        $answer = Utils::getInput("y");
+        $answer = strtolower(Utils::getInput("y"));
         if (!in_array($answer, ['y', 'yes', '1'])) return false;
 
         return true;
@@ -129,7 +129,7 @@ class InstallationWizard {
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter a new username [user]", LogLevel::INFO);
 
-        $answer = Utils::validateInput(Utils::getInput("user"), ['root', 'localhost'], "Username \"%valid\" is not allowed. Please choose another username.", "user");
+        $answer = Utils::validateInput(strtolower(Utils::getInput("user")), ['root', 'localhost'], "Username \"%valid\" is not allowed. Please choose another username.", "user");
         if ($answer === false) return false;
 
         self::$config->setNested("UserData.accounts.user.username", $answer);
@@ -151,7 +151,7 @@ class InstallationWizard {
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Please confirm if you want to enable autologin for the user [y/N]:", LogLevel::INFO);
 
-        $answer = Utils::getInput(null);
+        $answer = strtolower(Utils::getInput(null));
         if (in_array($answer, ['y', 'yes', '1'])) $answer = "enable";
 
         self::$config->setNested("UserData.accounts.user.autologin", $answer);
@@ -162,7 +162,7 @@ class InstallationWizard {
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter your hostname [usr]", LogLevel::INFO);
 
-        $answer = Utils::validateInput(Utils::getInput("usr"), ['localhost'], "The hostname '%valid' is not suitable. Please choose another hostname.", "usr");
+        $answer = Utils::validateInput(strtlower(Utils::getInput("usr")), ['localhost'], "The hostname '%valid' is not suitable. Please choose another hostname.", "usr");
         if ($answer === false) return false;
 
         self::$config->setNested("UserData.hostname", $answer);
@@ -276,9 +276,7 @@ class InstallationWizard {
         Logger::send("Save your account name and passwords",                                                         LogLevel::WARNING);
         Logger::send("Do you want to continue? [Y/n]",                                                               LogLevel::NOTICE);
 
-        $answer = Utils::getInput("y");
-        if (!in_array($answer, ['y', 'yes', '1'])) return false;
-
+        if (!in_array(strtolower(Utils::getInput("y")), ['y', 'yes', '1'])) return false;
         return true;
     }
 }

@@ -57,7 +57,7 @@ class SystemInstaller {
 
         $commands    = [
             "F2FS"  => "mkfs.f2fs -f /dev/"  . self::$config["DiskData"]["system"],
-            "EXT4"  => "mkfs.ext4 -f /dev/"  . self::$config["DiskData"]["system"],
+            "EXT4"  => "mkfs.ext4 /dev/"  . self::$config["DiskData"]["system"],
             "BTRFS" => "mkfs.btrfs -f /dev/" . self::$config["DiskData"]["system"],
             "XFS"   => "mkfs.xfs -f /dev/"   . self::$config["DiskData"]["system"]
         ];
@@ -229,9 +229,7 @@ class SystemInstaller {
         Logger::send("Installation completed.",  LogLevel::INFO);
         Logger::send("Reboot system now? [Y/n]", LogLevel::NOTICE);
 
-        $answer = Utils::getInput("y");
-        if (in_array($answer, ['y', 'yes', '1'])) Utils::execute("reboot");
-
+        if (in_array(strtolower(Utils::getInput("y")), ['y', 'yes', '1'])) Utils::execute("reboot");
         return true;
     }
 }
