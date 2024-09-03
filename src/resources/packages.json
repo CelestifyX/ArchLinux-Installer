@@ -1,125 +1,86 @@
 {
-    "kernel": [
-        {
-            "type": "LINUX (INTEL)",
-            "packages": [
-                "base",
-                "base-devel",
-                "coreutils",
-                "util-linux",
-                "linux",
-                "linux-headers",
-                "linux-firmware",
-                "intel-ucode",
-                "iucode-tool",
-                "nano",
-                "dhcpcd",
-                "dhclient",
-                "networkmanager",
-                "network-manager-applet"
-            ]
-        },
+    "kernel": {
+        "common_packages": [
+            "base",
+            "base-devel",
+            "coreutils",
+            "util-linux",
+            "nano",
+            "dhcpcd",
+            "dhclient",
+            "networkmanager",
+            "network-manager-applet",
+            "xorg",
+            "xorg-server",
+            "xorg-xwayland",
+            "archlinux-keyring"
+        ],
 
-        {
-            "type": "LINUX-ZEN (INTEL)",
-            "packages": [
-                "base",
-                "base-devel",
-                "coreutils",
-                "util-linux",
-                "linux-zen",
-                "linux-zen-headers",
-                "linux-firmware",
-                "intel-ucode",
-                "iucode-tool",
-                "nano",
-                "dhcpcd",
-                "dhclient",
-                "networkmanager",
-                "network-manager-applet"
-            ]
-        },
+        "types": [
+            {
+                "type": "LINUX (INTEL)",
+                "packages": [
+                    "linux",
+                    "linux-headers",
+                    "linux-firmware",
+                    "intel-ucode",
+                    "iucode-tool"
+                ]
+            },
 
-        {
-            "type": "LINUX-LTS (INTEL)",
-            "packages": [
-                "base",
-                "base-devel",
-                "coreutils",
-                "util-linux",
-                "linux-lts",
-                "linux-lts-headers",
-                "linux-firmware",
-                "intel-ucode",
-                "iucode-tool",
-                "nano",
-                "dhcpcd",
-                "dhclient",
-                "networkmanager",
-                "network-manager-applet"
-            ]
-        },
-        
-        {
-            "type": "LINUX (AMD)",
-            "packages": [
-                "base",
-                "base-devel",
-                "coreutils",
-                "util-linux",
-                "linux",
-                "linux-headers",
-                "linux-firmware",
-                "amd-ucode",
-                "archlinux-keyring",
-                "nano",
-                "dhcpcd",
-                "dhclient",
-                "networkmanager",
-                "network-manager-applet"
-            ]
-        },
+            {
+                "type": "LINUX-ZEN (INTEL)",
+                "packages": [
+                    "linux-zen",
+                    "linux-zen-headers",
+                    "linux-firmware",
+                    "intel-ucode",
+                    "iucode-tool"
+                ]
+            },
 
-        {
-            "type": "LINUX-ZEN (AMD)",
-            "packages": [
-                "base",
-                "base-devel",
-                "coreutils",
-                "util-linux",
-                "linux-zen",
-                "linux-zen-headers",
-                "linux-firmware",
-                "amd-ucode",
-                "archlinux-keyring",
-                "nano",
-                "dhcpcd",
-                "dhclient",
-                "networkmanager",
-                "network-manager-applet"
-            ]
-        },
-        
-        {
-            "type": "LINUX-LTS (AMD)",
-            "packages": [
-                "base",
-                "base-devel",
-                "coreutils",
-                "util-linux",
-                "linux-lts",
-                "linux-lts-headers",
-                "linux-firmware",
-                "amd-ucode",
-                "archlinux-keyring",
-                "nano",
-                "dhcpcd",
-                "dhclient",
-                "networkmanager",
-                "network-manager-applet"
-            ]
-        }
-    ],
+            {
+                "type": "LINUX-LTS (INTEL)",
+                "packages": [
+                    "linux-lts",
+                    "linux-lts-headers",
+                    "linux-firmware",
+                    "intel-ucode",
+                    "iucode-tool"
+                ]
+            },
+
+            {
+                "type": "LINUX (AMD)",
+                "packages": [
+                    "linux",
+                    "linux-headers",
+                    "linux-firmware",
+                    "amd-ucode"
+                ]
+            },
+
+            {
+                "type": "LINUX-ZEN (AMD)",
+                "packages": [
+                    "linux-zen",
+                    "linux-zen-headers",
+                    "linux-firmware",
+                    "amd-ucode"
+                ]
+            },
+
+            {
+                "type": "LINUX-LTS (AMD)",
+                "packages": [
+                    "linux-lts",
+                    "linux-lts-headers",
+                    "linux-firmware",
+                    "amd-ucode"
+                ]
+            }
+        ]
+    },
 
     "video": [
         {
@@ -234,13 +195,9 @@
         {
             "type": "KDE PLASMA",
             "packages": [
-                "xorg",
-                "xorg-server",
                 "bluez",
                 "bluez-utils",
-                "xorg-xwayland",
                 "plasma",
-                "sddm",
                 "kate",
                 "dolphin",
                 "konsole",
@@ -252,7 +209,6 @@
                 "gst-libav",
                 "ark",
                 "gwenview",
-                "sddm-kcm",
                 "spectacle",
                 "fwupd",
                 "power-profiles-daemon",
@@ -260,79 +216,139 @@
             ],
 
             "service": [
-                "sddm",
                 "bluetooth"
-            ]
+            ],
+
+            "greeter": 0
         },
 
         {
             "type": "GNOME",
             "packages": [
-                "xorg",
-                "xorg-server",
                 "gnome",
                 "nautilus",
                 "gnome-terminal",
                 "gnome-tweaks",
                 "gnome-shell-extensions",
-                "rhythmbox",
-                "gdm"
+                "rhythmbox"
             ],
 
-            "service": [
-                "gdm"
-            ]
+            "greeter": 1
         },
 
         {
             "type": "XFCE4",
             "packages": [
-                "xorg",
-                "xorg-server",
                 "xfce4",
                 "xfce4-goodies",
-                "lightdm",
-                "lightdm-gtk-greeter"
+                "gvfs",
+                "xarchiver"
             ],
 
-            "service": [
-                "lightdm"
-            ]
+            "greeter": 2
         },
 
         {
             "type": "CINNAMON",
             "packages": [
-                "xorg",
-                "xorg-server",
                 "cinnamon",
                 "gnome-terminal",
-                "lightdm",
-                "lightdm-gtk-greeter"
+                "gnome-keyring",
+                "engrampa",
+                "gnome-screenshot",
+                "gvfs-smb",
+                "xed",
+                "xdg-user-dirs-gtk",
+                "bluez",
+                "bluez-utils"
             ],
 
             "service": [
-                "lightdm"
-            ]
+                "bluetooth"
+            ],
+
+            "greeter": 2
         },
 
         {
             "type": "BUDGIE",
             "packages": [
-                "xorg",
-                "xorg-server",
-                "budgie-desktop",
-                "lightdm",
-                "lightdm-gtk-greeter"
+                "budgie",
+                "nemo",
+                "mate-terminal",
+                "papirus-icon-theme"
             ],
 
-            "service": [
-                "lightdm"
-            ]
+            "greeter": 3
         },
 
         {
-            "type": "NOTHING"
+            "type": "MATE",
+            "packages": [
+                "mate",
+			    "mate-extra"
+            ],
+
+            "greeter": 2
+        },
+
+        {
+            "type": "LXQT",
+            "packages": [
+                "lxqt",
+                "breeze-icons",
+                "oxygen-icons",
+                "xdg-utils",
+                "ttf-freefont",
+                "leafpad",
+                "slock"
+            ],
+
+            "greeter": 0
+        },
+
+        {
+            "type": "DEEPIN",
+            "packages": [
+                "deepin",
+                "deepin-terminal",
+                "deepin-editor"
+            ],
+
+            "greeter": 2
+        },
+
+        {
+            "type": "COSMIC",
+            "packages": [
+                "cosmic"
+            ],
+
+            "greeter": 4
+        },
+
+        {
+            "type": "ENLIGHTENMENT",
+            "packages": [
+                "enlightenment",
+			    "terminology"
+            ],
+
+            "greeter": 2
+        },
+
+        {
+            "type": "CUTEFISH",
+            "packages": [
+                "cutefish"
+            ],
+
+            "greeter": 0
+        },
+
+        {
+            "type": "NOTHING",
+            "greeter": 5
         }
     ],
 
@@ -345,6 +361,71 @@
                 "noto-fonts-emoji",
                 "noto-fonts-extra",
                 "ttf-nerd-fonts-symbols"
+            ]
+        },
+
+        {
+            "type": "NOTHING"
+        }
+    ],
+
+    "greeter": [
+        {
+            "type": "SDDM",
+            "packages": [
+                "sddm",
+                "sddm-kcm"
+            ],
+
+            "service": [
+                "sddm"
+            ]
+        },
+
+        {
+            "type": "GDM",
+            "packages": [
+                "gdm"
+            ],
+
+            "service": [
+                "gdm"
+            ]
+        },
+
+        {
+            "type": "LIGHTDM",
+            "packages": [
+                "lightdm",
+                "lightdm-gtk-greeter"
+            ],
+
+            "service": [
+                "lightdm"
+            ]
+        },
+
+        {
+            "type": "LIGHTDM-SLICK",
+            "packages": [
+                "lightdm",
+                "lightdm-slick-greeter"
+            ],
+
+            "service": [
+                "lightdm"
+            ]
+        },
+
+        {
+            "type": "LIGHTDM-COSMIC",
+            "packages": [
+                "lightdm",
+                "cosmic-greeter"
+            ],
+
+            "service": [
+                "lightdm"
             ]
         },
 

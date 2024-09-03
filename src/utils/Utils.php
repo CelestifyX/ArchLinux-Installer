@@ -211,12 +211,17 @@ class Utils {
     }
 
     private static function readAdditionalPackages(): array {
-        $filePath = \PATH . 'additional_packages.json';
+        $filePath = \PATH . 'settings.json';
         if (!file_exists($filePath)) return [];
     
         $jsonContent = file_get_contents($filePath);
-        $packages    = json_decode($jsonContent, true);
-    
-        return (is_array($packages) ? array_filter($packages) : []);
+        $packages    = json_decode($jsonContent, true)['additionals'];
+
+        return (
+            (
+                !empty($packages) and
+                is_array($packages)
+            ) ? array_filter($packages) : []
+        );
     }
 }
