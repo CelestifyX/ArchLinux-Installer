@@ -70,10 +70,8 @@ class SystemInstaller {
 
     private static function mountPartitions(): bool {
         foreach ([
-            ["mkdir -p /mnt >/dev/null 2>&1", "Creating the /mnt folder"],
             ["mount /dev/" . self::$config["device"]["system"] . " /mnt >/dev/null 2>&1", "Mounting the / partition to the /mnt directory"],
-            ["mkdir -p /mnt/boot/efi >/dev/null 2>&1", "Creating the /mnt/boot/efi folder"],
-            ["mount /dev/" . self::$config["device"]["boot"] . " /mnt/boot/efi >/dev/null 2>&1", "Mounting the EFI partition to the /mnt/boot/efi directory"]
+            ["mount --mkdir /dev/" . self::$config["device"]["boot"] . " /mnt/boot/efi >/dev/null 2>&1", "Mounting the EFI partition to the /mnt/boot/efi directory"]
         ] as [$command, $description]) {
             if (!Utils::runCommandWithProgress($command, $description)) return false;
         }
