@@ -133,8 +133,8 @@ class SystemInstaller {
             ["arch-chroot /mnt /bin/bash -c \"echo '%wheel ALL=(ALL) ALL' | EDITOR='tee -a' visudo\" >/dev/null 2>&1", "Allowing the wheel group to use sudo"],
             ["arch-chroot /mnt /bin/bash -c 'echo Defaults pwfeedback >> /etc/sudoers' >/dev/null 2>&1", "Added pwfeedback to /etc/sudoers"],
             ["arch-chroot /mnt /bin/bash -c 'useradd -m -G wheel -s /bin/bash " . self::$config["accounts"]["user"]["login"] . "' >/dev/null 2>&1", "Adding a user to the wheel group"],
-            ["echo root:" . self::$config["accounts"]["root"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password for root"],
-            ["echo " . self::$config["accounts"]["user"]["login"] . ":" . self::$config["accounts"]["user"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password for " . self::$config["accounts"]["user"]["login"]]
+            ["echo root:" . self::$config["accounts"]["root"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password (for root)"],
+            ["echo " . self::$config["accounts"]["user"]["login"] . ":" . self::$config["accounts"]["user"]["password"] . " | arch-chroot /mnt chpasswd >/dev/null 2>&1", "Changing the password (for " . self::$config["accounts"]["user"]["login"] . ")"]
         ] as [$command, $description]) {
             if (!Utils::runCommandWithProgress($command, $description)) return false;
         }
