@@ -347,6 +347,16 @@
         },
 
         {
+            "type": "HYPRLAND",
+            "packages": [
+                "hyprland",
+                "xdg-desktop-portal-hyprland"
+            ],
+
+            "greeter": 5
+        },
+
+        {
             "type": "NOTHING",
             "greeter": 5
         }

@@ -201,9 +201,9 @@ class InstallationWizard {
         self::$config->setNested("drivers.audio.type",    self::$packages["audio"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
-        Logger::send("Select the desktop environment (0 - KDE, 1 - GNOME, 2 - XFCE4, 3 - CINNAMON, 4 - BUDGIE, 5 - MATE, 6 - LXQT, 7 - DEEPIN. 8 - COSMIC, 9 - ENLIGHTENMENT, 10 - CUTEFISH, 11 - NOTHING) [0]", LogLevel::INFO);
+        Logger::send("Select the desktop environment (0 - KDE, 1 - GNOME, 2 - XFCE4, 3 - CINNAMON, 4 - BUDGIE, 5 - MATE, 6 - LXQT, 7 - DEEPIN. 8 - COSMIC, 9 - ENLIGHTENMENT, 10 - CUTEFISH, 11 - HYPRLAND, 12 - NOTHING) [0]", LogLevel::INFO);
 
-        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'], true);
+        $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'], true);
         if ($answer === false) return false;
 
         self::$config->setNested("desktop.package",         (!empty(self::$packages["desktop"][$answer]["packages"] ?? []) ? Utils::arrayToString(self::$packages["desktop"][$answer]["packages"]) : null));
