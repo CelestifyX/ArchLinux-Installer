@@ -35,7 +35,7 @@ class Terminal {
 	private static ?bool $formattingCodes       = null;
 
 	static function hasFormattingCodes(): bool {
-		if (self::$formattingCodes === null) throw new \InvalidStateException("Formation codes were not initialized");
+		if (self::$formattingCodes === null) throw new \Exception("Formation codes were not initialized");
 		return self::$formattingCodes;
 	}
 

@@ -3,11 +3,10 @@
 DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DIR"
 
-if [ -f ./jre/bin/php ]; then
-	export PHPRC=""
-	PHP_BINARY="./jre/bin/php"
+if [[ -n $(type php 2> /dev/null) ]]; then
+	PHP_BINARY=$(type -p php)
 else
-	echo "Couldn't find a PHP binary in ./jre/bin/php"
+	echo "Couldn't find a PHP binary in system PATH"
 	exit 1
 fi
 

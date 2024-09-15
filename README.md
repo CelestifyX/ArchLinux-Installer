@@ -4,17 +4,22 @@ An Arch-Linux installer written in PHP.
 
 ## Installation
 
-1. Clone the repository:
+1. Install Git and PHP:
+    ```bash
+    pacman -Sy git php
+    ```
+
+2. Clone the repository:
     ```bash
     git clone https://github.com/CelestifyX/ArchLinux-Installer
     ```
 
-2. Navigate to the project directory:
+3. Navigate to the project directory:
     ```bash
     cd ArchLinux-Installer
     ```
 
-3. Run the installer:
+4. Run the installer:
     ```bash
     ./start
     ```

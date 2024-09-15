@@ -20,9 +20,9 @@
     },
 
     "device": {
-        "disk": null,
-        "boot": null,
-        "system": null,
+        "disk":        null,
+        "boot":        null,
+        "system":      null,
         "file_system": null
     },
 

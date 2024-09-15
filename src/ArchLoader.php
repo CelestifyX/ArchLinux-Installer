@@ -18,13 +18,7 @@ namespace {
 
     define('PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 
-    require_once(PATH . "src/spl/ClassLoader.php");
-	require_once(PATH . "src/spl/BaseClassLoader.php");
-
-    $autoloader = new \BaseClassLoader();
-	$autoloader->addPath(PATH . "src");
-	$autoloader->register(true);
-
+    require 'vendor/autoload.php';
     if (!file_exists(PATH)) @mkdir(PATH, 0777, true);
 
     (new Terminal())->init();
@@ -47,7 +41,7 @@ namespace {
 		exit(1);
 	}
 
-    if (Utils::execute("if [ -f /run/archiso/airootfs/version ]; then exit 0; else exit 1; fi") !== 0) {
+    if (Utils::execute("if [ ! -f /run/archiso/airootfs/version ]; then exit 0; else exit 1; fi") !== 0) {
         Logger::send("This script must be run in an Arch Linux LiveCD environment.", LogLevel::ERROR);
         exit(1);
     }
