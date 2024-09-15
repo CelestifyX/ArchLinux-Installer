@@ -357,6 +357,57 @@
         },
 
         {
+            "type": "BSPWM",
+            "packages": [
+                "bspwm"
+            ],
+
+            "greeter": 5
+        },
+
+        {
+            "type": "AWESOME",
+            "packages": [
+                "awesome"
+            ],
+
+            "greeter": 5
+        },
+
+        {
+            "type": "I3",
+            "packages": [
+                "i3-wm",
+                "i3lock",
+                "i3status",
+                "i3blocks"
+            ],
+
+            "greeter": 5
+        },
+
+        {
+            "type": "QTILE",
+            "packages": [
+                "qtile"
+            ],
+
+            "greeter": 5
+        },
+
+        {
+            "type": "SWAY",
+            "packages": [
+                "sway",
+                "swaybg",
+                "swaylock",
+                "swayidle"
+            ],
+
+            "greeter": 5
+        },
+
+        {
             "type": "NOTHING",
             "greeter": 5
         }

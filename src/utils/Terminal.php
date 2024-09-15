@@ -39,8 +39,8 @@ class Terminal {
 		return self::$formattingCodes;
 	}
 
-	static function init(?bool $enableFormatting = null): void {
-		self::$formattingCodes = ($enableFormatting ?? self::detectFormattingCodesSupport());
+	static function init(): void {
+		self::$formattingCodes = self::detectFormattingCodesSupport();
 		if (!self::$formattingCodes) return;
 
 		switch (Utils::getOS()) {
