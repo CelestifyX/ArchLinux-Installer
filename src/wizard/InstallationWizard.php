@@ -131,13 +131,13 @@ class InstallationWizard {
         $random = Utils::generatePassword();
 
         Logger::send("Enter a new password (for " . $answer . ") [" . $random . "]", LogLevel::INFO);
-        $answer = Utils::getInput($random);
+        $answer = Utils::validatePassword(Utils::getInput($random), $random);
 
         self::$config->setNested("accounts.user.password", $answer);
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Enter a new password (for root) [" . $random . "]", LogLevel::INFO);
-        $answer = Utils::getInput($random);
+        $answer = Utils::validatePassword(Utils::getInput($random), $random);
 
         self::$config->setNested("accounts.root.password", $answer);
 
@@ -186,9 +186,9 @@ class InstallationWizard {
         $answer = Utils::validateChoice(Utils::getInput(null), ['0', '1', '2', '3', '4']);
         if ($answer === false) return false;
 
-        self::$config->setNested("drivers.video.package", (!empty(self::$packages["video"][$answer]["packages"] ?? []) ? Utils::arrayToString(self::$packages["video"][$answer]["packages"]) : null));
-        self::$config->setNested("drivers.video.service", (!empty(self::$packages["video"][$answer]["service"]  ?? []) ? Utils::arrayToString(self::$packages["video"][$answer]["service"])  : null));
-        self::$config->setNested("drivers.video.type",    self::$packages["video"][$answer]["type"]);
+        self::$config->setNested("drivers.video.package", (!empty(self::$packages["video"]["types"][$answer]["packages"] ?? []) ? Utils::arrayToString(self::$packages["video"]["common_packages"]) . " " . Utils::arrayToString(self::$packages["video"]["types"][$answer]["packages"]) : null));
+        self::$config->setNested("drivers.video.service", (!empty(self::$packages["video"]["types"][$answer]["service"]           ?? []) ? Utils::arrayToString(self::$packages["video"][$answer]["service"])                                                                            : null));
+        self::$config->setNested("drivers.video.type",    self::$packages["video"]["types"][$answer]["type"]);
 
         // ---------------------------------------------------------------------------------------------------------
         Logger::send("Select a audio driver (0 - PIPEWIRE, 1 - PULSEAUDIO, 2 - ALSA, 3 - NOTHING) [0]", LogLevel::INFO);

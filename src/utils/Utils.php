@@ -153,6 +153,31 @@ class Utils {
         }
     }
 
+    static function validatePassword(string|int $choice, string $default = null): string|false {
+        while (true) {
+            try {
+                $minLength = 4;
+                $maxLength = 20;
+
+                if (
+                    (strlen($choice) < $minLength) ||
+                    (strlen($choice) > $maxLength)
+                ) {
+                    Logger::send("Password must be between " . $minLength . " and " . $maxLength . " characters long.", LogLevel::WARNING);
+                    $choice = self::getInput($default);
+                } elseif (preg_match('/[^a-zA-Z0-9]/', $choice)) {
+                    Logger::send("Password contains forbidden characters.", LogLevel::WARNING);
+                    $choice = self::getInput($default);
+                } else {
+                    return $choice;
+                }
+            } catch (\Exception $e) {
+                Logger::send("An error has occurred: " . $e->getMessage(), LogLevel::ERROR);
+                return false;
+            }
+        }
+    }
+
     static function getSize(string $device, ?string $partition = null, bool $isPartition = true): ?string {
         $command = ($isPartition ?
             "fdisk -l /dev/" . $device . " | grep /dev/" . $partition :

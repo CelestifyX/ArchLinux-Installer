@@ -56,10 +56,10 @@ class SystemInstaller {
         $file_system = self::$config["device"]["file_system"];
 
         $commands    = [
-            "F2FS"  => "mkfs.f2fs -f /dev/"  . self::$config["device"]["system"],
+            "F2FS"  => "mkfs.f2fs /dev/"  . self::$config["device"]["system"],
             "EXT4"  => "mkfs.ext4 /dev/"     . self::$config["device"]["system"],
-            "BTRFS" => "mkfs.btrfs -f /dev/" . self::$config["device"]["system"],
-            "XFS"   => "mkfs.xfs -f /dev/"   . self::$config["device"]["system"]
+            "BTRFS" => "mkfs.btrfs /dev/" . self::$config["device"]["system"],
+            "XFS"   => "mkfs.xfs /dev/"   . self::$config["device"]["system"]
         ];
 
         if (!isset($commands[$file_system]))                                                                                                    return false;
