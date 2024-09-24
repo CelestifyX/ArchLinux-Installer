@@ -3,43 +3,14 @@
 namespace utils;
 
 class Utils {
-    const OS_WINDOWS = "win";
-	const OS_IOS     = "ios";
-	const OS_MACOS   = "mac";
-	const OS_ANDROID = "android";
 	const OS_LINUX   = "linux";
-	const OS_BSD     = "bsd";
 	const OS_UNKNOWN = "other";
 
     private static ?string $os = null;
 
-    static function getOS(bool $recalculate = false): string {
-        if (
-            (self::$os === null) ||
-            $recalculate
-        ) {
-            $uname = php_uname("s");
-
-            if (stripos($uname, "Darwin") !== false) {
-                self::$os = ((strpos(php_uname("m"), "iP") === 0) ? self::OS_IOS : self::OS_MACOS);
-            } elseif (
-                (stripos($uname, "Win") !== false) ||
-                ($uname === "Msys")
-            ) {
-                self::$os = self::OS_WINDOWS;
-            } elseif (stripos($uname, "Linux") !== false) {
-                self::$os = (@file_exists("/system/build.prop") ? self::OS_ANDROID : self::OS_LINUX);
-            } elseif (
-                (stripos($uname, "BSD") !== false) ||
-                ($uname === "DragonFly")
-            ) {
-                self::$os = self::OS_BSD;
-            } else {
-                self::OS_UNKNOWN;
-            }
-        }
-
-        return self::$os;
+    static function isLinux(): bool {
+        if (stripos(php_uname("s"), "Linux") !== false) return true;
+        return false;
     }
 
     static function terminate(): void {
@@ -90,16 +61,13 @@ class Utils {
         }
     }
 
-    static function validateChoice(?string $choice, array $validChoices, bool $defaultToZero = false): string|false {
+    static function validateChoice(?string $choice, array $validChoices, bool $defaultZero = false): string|false {
+        if (
+            empty($choice) and
+            $defaultZero
+        ) return "0";
+        
         while (true) {
-            if (
-                empty($choice) and
-                $defaultToZero
-            ) {
-                return "0";
-                break;
-            }
-
             try {
                 if (in_array($choice, $validChoices)) {
                     return $choice;

@@ -42,14 +42,10 @@ class Terminal {
 	static function init(): void {
 		self::$formattingCodes = self::detectFormattingCodesSupport();
 		if (!self::$formattingCodes) return;
-
-		switch (Utils::getOS()) {
-			case Utils::OS_LINUX:
-				self::getEscapeCodes();
-				break;
-		}
+		
+		self::getEscapeCodes();
 	}
-
+	
 	static function isInit(): bool {
 		return (self::$formattingCodes !== null);
 	}

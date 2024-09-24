@@ -1,17 +1,13 @@
 <?php
 
 namespace {
-    use utils\ {
-        Logger,
-        LogLevel,
-        Terminal,
-        Utils
-    };
+    use utils\Logger;
+    use utils\LogLevel;
+    use utils\Terminal;
+    use utils\Utils;
 
-    use wizard\ {
-        InstallationWizard,
-        SystemInstaller
-    };
+    use wizard\InstallationWizard;
+    use wizard\SystemInstaller;
 
     const NAME                = "ArchLinux-Installer";
     const MINIMAL_PHP_VERSION = "8.0";
@@ -24,7 +20,7 @@ namespace {
     (new Terminal())->init();
     (new Logger(PATH . "installer.log"));
 
-    if (Utils::getOS() !== Utils::OS_LINUX) {
+    if (!Utils::isLinux()) {
         Logger::send("This script is only supported on Linux.", LogLevel::ERROR);
         exit(1);
     }
@@ -41,7 +37,7 @@ namespace {
 		exit(1);
 	}
 
-    if (Utils::execute("if [ -f /run/archiso/airootfs/version ]; then exit 0; else exit 1; fi") !== 0) {
+    if (!file_exists("/run/archiso/airootfs/version")) {
         Logger::send("This script must be run in an Arch Linux LiveCD environment.", LogLevel::ERROR);
         exit(1);
     }

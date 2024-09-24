@@ -2,12 +2,10 @@
 
 namespace wizard;
 
-use utils\ {
-    Logger,
-    LogLevel,
-    Config,
-    Utils
-};
+use utils\Logger;
+use utils\LogLevel;
+use utils\Config;
+use utils\Utils;
 
 class SystemInstaller {
     private static ?array $config = null;
@@ -56,14 +54,17 @@ class SystemInstaller {
         $file_system = self::$config["device"]["file_system"];
 
         $commands    = [
-            "F2FS"  => "mkfs.f2fs /dev/"  . self::$config["device"]["system"],
-            "EXT4"  => "mkfs.ext4 /dev/"     . self::$config["device"]["system"],
-            "BTRFS" => "mkfs.btrfs /dev/" . self::$config["device"]["system"],
-            "XFS"   => "mkfs.xfs /dev/"   . self::$config["device"]["system"]
+            "F2FS"  => "mkfs.f2fs -f /dev/"  . self::$config["device"]["system"],
+            "EXT4"  => "mkfs.ext4 -f /dev/"  . self::$config["device"]["system"],
+            "BTRFS" => "mkfs.btrfs -f /dev/" . self::$config["device"]["system"],
+            "XFS"   => "mkfs.xfs -f /dev/"   . self::$config["device"]["system"]
         ];
 
-        if (!isset($commands[$file_system]))                                                                                                    return false;
-        if (!Utils::runCommandWithProgress($commands[$file_system] . " >/dev/null 2>&1", "Formatting the SYSTEM partition to " . $file_system)) return false;
+        if (!isset($commands[$file_system])) return false;
+        
+        if (!Utils::runCommandWithProgress($commands[$file_system] . " >/dev/null 2>&1", "Formatting the SYSTEM partition to " . $file_system)) {
+            if (!Utils::runCommandWithProgress(str_replace("-f ", "", $commands[$file_system]) . " >/dev/null 2>&1", "Formatting the SYSTEM partition to " . $file_system . " (Attempt #2)")) return false;
+        }
 
         return true;
     }
@@ -223,7 +224,7 @@ class SystemInstaller {
             $packages = "";
             foreach (Utils::getExistingPackages() as $package) $packages .= $package . " ";
 
-            if (!Utils::runCommandWithProgress("pacstrap -i /mnt " . rtrim($packages) . " --noconfirm >/dev/null 2>&1", "Installing additional packages " . $packages)) return false;
+            if (!Utils::runCommandWithProgress("pacstrap -i /mnt " . rtrim($packages) . " --noconfirm >/dev/null 2>&1", "Installing additional packages: " . $packages)) return false;
         }
 
         return true;

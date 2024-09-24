@@ -2,12 +2,10 @@
 
 namespace wizard;
 
-use utils\ {
-    Logger,
-    LogLevel,
-    Config,
-    Utils
-};
+use utils\Logger;
+use utils\LogLevel;
+use utils\Config;
+use utils\Utils;
 
 class InstallationWizard {
     private static ?Config $config   = null;
